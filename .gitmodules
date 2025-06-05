@@ -1,0 +1,3 @@
+[submodule "src/models/src_glm4/third_party/Matcha-TTS"]
+	path = src/models/src_glm4/third_party/Matcha-TTS
+	url = git@github.com:shivammehta25/Matcha-TTS.git
