@@ -1,0 +1,14 @@
+
+# -------------------------------qa-------------------------------------
+
+basic: 
+  class: src.config.EvalTaskCfg
+  args:
+    evaluator: exist_match
+    summarizer: AvgInfo
+
+choice:
+  class: src.config.EvalTaskCfg
+  args:
+    evaluator: single_option_match
+    summarizer: AvgInfo

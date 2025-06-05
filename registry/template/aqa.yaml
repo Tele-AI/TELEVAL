@@ -1,0 +1,15 @@
+zeroshot-aqa:
+  class: src.prompt.template.DataTemplate
+  args:
+    template:
+      - role: user
+        content:
+          audio: "{{audio}}"
+
+zeroshot-qa:
+  class: src.prompt.template.DataTemplate
+  args:
+    template:
+      - role: user
+        content:
+          text: "{{query}}"

@@ -1,0 +1,174 @@
+# ------------------------bubble noise-----------------------------
+aqa-bubble_noise-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset:
+      - "bubble_noise_-5dB"
+      - "bubble_noise_0dB"
+      - "bubble_noise_5dB"
+      - "bubble_noise_10dB"
+      - "bubble_noise_15dB"
+      - "bubble_noise_20dB"
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+# ------------------------white noise-----------------------------
+aqa-white_noise-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset:
+      - "white_noise_-5dB"
+      - "white_noise_0dB"
+      - "white_noise_5dB"
+      - "white_noise_10dB"
+      - "white_noise_15dB"
+      - "white_noise_20dB"
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+# ---------------------------distortion------------------------------------
+aqa-distortion-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset:
+      - "distortion_rate0.1"
+      - "distortion_rate0.2"
+      - "distortion_rate0.3"
+      - "distortion_rate0.4"
+      - "distortion_rate0.5"
+      - "distortion_rate0.6"
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+# ---------------------------------single_background_speakers------------------------------------
+aqa-single_background_speaker-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset:
+      - "single_background_speaker_-5dB"
+      - "single_background_speaker_0dB"
+      - "single_background_speaker_5dB"
+      - "single_background_speaker_10dB"
+      - "single_background_speaker_15dB"
+      - "single_background_speaker_20dB"
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+# ---------------------------------multi_background_speakers------------------------------------
+aqa-multi_background_speakers-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset:
+      - "multi_background_speakers_-5dB"
+      - "multi_background_speakers_0dB"
+      - "multi_background_speakers_5dB"
+      - "multi_background_speakers_10dB"
+      - "multi_background_speakers_15dB"
+      - "multi_background_speakers_20dB"
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+# ---------------------------------lowpass_filtering------------------------------------
+aqa-lowpass_filtering-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset:
+      - "lowpass_filtering_100Hz"
+      - "lowpass_filtering_200Hz"
+      - "lowpass_filtering_300Hz"
+      - "lowpass_filtering_400Hz"
+      - "lowpass_filtering_500Hz"
+      - "lowpass_filtering_600Hz"
+      - "lowpass_filtering_700Hz"
+      - "lowpass_filtering_800Hz"
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+# ---------------------------------packet_loss------------------------------------
+aqa-packet_loss-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset:
+      - "packet_loss_rate10"
+      - "packet_loss_rate20"
+      - "packet_loss_rate30"
+      - "packet_loss_rate40"
+      - "packet_loss_rate50"
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+# ---------------------------------reverberation_RT60------------------------------------
+aqa-reverberation_RT60-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset:
+      - "reverberation_RT60_100ms"
+      - "reverberation_RT60_500ms"
+      - "reverberation_RT60_1000ms"
+      - "reverberation_RT60_2000ms"
+      - "reverberation_RT60_3000ms"
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+# ---------------------------------complex_envir------------------------------------
+aqa-complex_environments-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset:
+      - "complex_environments_-5dB"
+      - "complex_environments_0dB"
+      - "complex_environments_5dB"
+      - "complex_environments_10dB"
+      - "complex_environments_15dB"
+      - "complex_environments_20dB"
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+# ---------------------------------complex_envir_reverb------------------------------------
+aqa-complex_environments_reverb-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset:
+      - "complex_environments_reverb_-5dB"
+      - "complex_environments_reverb_0dB"
+      - "complex_environments_reverb_5dB"
+      - "complex_environments_reverb_10dB"
+      - "complex_environments_reverb_15dB"
+      - "complex_environments_reverb_20dB"
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+# -------------------------------different distance RT60---------------------------
+aqa-different_distance-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset:
+      - "different_distance_1m"
+      - "different_distance_2m"
+      - "different_distance_3m"
+      - "different_distance_4m"
+      - "different_distance_5m"
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic

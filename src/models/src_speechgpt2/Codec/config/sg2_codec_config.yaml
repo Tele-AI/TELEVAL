@@ -1,0 +1,157 @@
+generator_params:
+    # Mel spectrogram parameters 
+    mel_kwargs: # * 24khz -> 100hz
+        fs: 24000        
+        fft_size: 1024            
+        hop_size: 240              
+        win_length: null           # Window length (same as fft_size if null)
+        window: "hann_window"      # Window type
+        num_mels: 128              # Number of mel bins
+        fmin: 0                    # Minimum frequency
+        fmax: null                 # Maximum frequency 
+        normalized: false          # Normalize mel spectrogram
+        onesided: true             # One-sided STFT
+        eps: 1.0e-10               # Epsilon for numerical stability
+        log_base: null             # Log base for mel spectrogram
+
+
+
+    # Encoder Convnext 
+    encoder_convnext_kwargs: # * 100hz
+        input_channels: 128        # must be equal to num_mels 
+        depths: [3, 3, 9, 3]       # Depths of encoder layers
+        dims: [128, 256, 384, 512] # Dimensions of encoder layers
+        drop_path_rate: 0.2        # Drop path rate
+        kernel_size: 7     # Encoder kernel size
+        padding_mode: "zeros"
+
+
+
+    # Encoder Transformer parameters
+    encoder_transformer_kwargs: # * 100hz
+        d_model: 512
+        num_heads: 8
+        num_layers: 8
+        causal: True 
+        layer_scale: 0.01
+        context: 500 
+        conv_layout: True  
+        max_period: 10000
+        gating: "none"
+        norm: "layer_norm" 
+        positional_embedding: "rope"
+        dim_feedforward: 2048
+        input_dimension: 512
+        output_dimensions: [512, ]
+
+
+
+    encoder_extra_down_sample_kwargs: # * 100hz -> 25hz
+        stride: 2
+        dimension: 512
+        learnt: true
+        causal: true
+  
+
+    # Vector Quantization parameters 
+    quantizer_type: 'residual_vq'    
+    quantizer_kwargs:
+        train_codebook: true       
+        code_dim: 512                # Code dimension
+        codebook_num: 3
+        codebook_size: 1024        # Codebook size
+        kmeans_init: true
+        kmeans_iters: 10
+        decay: 0.99
+        threshold_ema_dead_code: 0.5
+
+    post_projecter_kwargs:
+        input_channels: 512
+        output_channels: 1024
+        stride: 1
+        bias: false
+        model: 'conv1d'
+
+    vq_transformer_kwargs:
+        d_model: 1024
+        num_heads: 8
+        num_layers: 8
+        causal: True 
+        layer_scale: 0.01
+        context: 125 
+        conv_layout: True  
+        max_period: 10000
+        gating: "none"
+        norm: "layer_norm" 
+        positional_embedding: "rope"
+        dim_feedforward: 4096
+        input_dimension: 1024
+        output_dimensions: [1024, ]
+
+    post_projecter_of_vq_transformer_kwargs:
+        input_channels: 1024
+        output_channels: 512
+        stride: 1
+        bias: false
+        model: 'conv1d'
+
+    decoder_extra_up_sample_kwargs: # * 25hz -> 100hz
+        in_channels: 512
+        out_channels: 512
+        kernel_size: 4 
+        stride: 2
+        bias: false
+    
+
+
+    # Decoder Transformer parameters
+    decoder_transformer_kwargs: # * 100hz
+        d_model: 512
+        num_heads: 8
+        num_layers: 8
+        causal: True
+        layer_scale: 0.01
+        context: 500  
+        conv_layout: True  
+        max_period: 10000
+        gating: "none"
+        norm: "layer_norm" 
+        positional_embedding: "rope"
+        dim_feedforward: 2048
+        input_dimension: 512
+        output_dimensions: [512, ]
+
+
+
+    # Decoder Convnext 
+    decoder_convnext_kwargs: # * 100hz
+        input_channels: 512        # must be equal to num_mels 
+        depths: [3, 3, 9, 3]       # Depths of encoder layers
+        dims: [512, 512, 512, 512] # Dimensions of encoder layers
+        drop_path_rate: 0.00        # Drop path rate
+        kernel_size: 7     # Encoder kernel size
+        padding_mode: "zeros"
+
+
+
+    # Decoder parameters
+    decoder_hifigan_kwargs: # * 100hz
+        in_channels: 512      # Decoder channels
+        channels: 512
+        kernel_size: 7     # Decoder kernel size
+        upsample_scales: [5, 4, 4, 3]          # Upsample scales
+        upsample_kernel_sizes: [10, 8, 8, 6]   # Upsample kernel sizes
+        resblock_kernel_sizes: [11]            # Resblock kernel sizes
+        resblock_dilations: [[1, 3, 5]]        # Resblock dilations
+        groups: 3          # Decoder groups
+        bias: true                 # Use bias
+        use_additional_convs: true # Use additional convolutions
+        nonlinear_activation: "LeakyReLU"      # Non-linear activation
+        nonlinear_activation_params:
+            negative_slope: 0.1    # Negative slope for LeakyReLU
+        stats: null                # Statistics for normalization
+
+
+    # Other parameters
+    mode: causal             # Mode (causal or non-causal)
+    use_weight_norm: true 

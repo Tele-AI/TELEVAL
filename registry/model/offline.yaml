@@ -1,0 +1,63 @@
+kimi-audio-7b-instruct:
+  class: src.models.kimi_audio.Kimi
+  args:
+    path: path/to/Kimi-Audio-7B-Instruct
+    whisper_path: path/to/whisper-large-v3
+    glm4_tokenizer: path/to/glm-4-voice-tokenizer
+    sample_params:
+      gen_type: greedy
+
+qwen2_5_omni:
+  class: src.models.qwen2_omni.Qwen2Omni
+  args:
+    path: path/to/Qwen2.5-Omni-7B
+    sample_params:
+      gen_type: greedy
+
+glm-4-voice-9b:
+  class: src.models.glm4voice.GLM4voice
+  args:
+    path: path/to/glm-4-voice-9b
+    speech_tokenizer_path: path/to/glm-4-voice-tokenizer
+    flow_path: path/to/glm-4-voice-decoder
+    sample_params:
+      gen_type: greedy
+
+MiniCPMo2_6-audio:
+  class: src.models.mini_cpm.MiniCPMoAudio
+  args:
+    path: path/to/MiniCPM-o-2_6
+    sample_params:
+      gen_type: greedy
+
+baichuan_omni_1d5:
+  class: src.models.baichuan.BaichuanOmni
+  args:
+    path: path/to/Baichuan-Omni-1d5
+    cosy_vocoder_path: path/to/Baichuan-Omni-1d5/hift.pt  # third_party/cosy24k_vocoder/hift.pt
+    sample_params:
+      gen_type: greedy
+
+llama_omni:
+  class: src.models.llama_omni.LlamaOmni
+  args:
+    path: path/to/Llama-3.1-8B-Omni
+    vocoder_path: path/to/Llama-3.1-8B-Omni/vocoder
+    sample_params:
+      gen_type: greedy
+
+speechgpt2:
+  class: src.models.speechgpt2.SpeechGPT2
+  args:
+    path: path/to/SpeechGPT-2-preview-7B
+    codec_ckpt_path: path/to/SpeechGPT-2.0-preview-Codec/sg2_codec_ckpt.pkl
+    sample_params:
+      gen_type: greedy
+
+freeze_omni:
+  class: src.models.freeze_omni.FreezeOmni
+  args:
+    path: path/to/Freeze-Omni/checkpoints
+    llm_path: path/to/Qwen2-7B-Instruct
+    sample_params:
+      gen_type: greedy

@@ -1,0 +1,26 @@
+qwen2-7b-instruct:
+  class: src.models.qwen.Qwen2Instruct
+  args:
+    path: path/to/Qwen2-7B-Instruct
+    sample_params:
+      gen_type: greedy
+
+qwen2.5-7b-instruct:
+  class: src.models.qwen.Qwen2Instruct
+  args:
+    path: path/to/Qwen2.5-7B-Instruct
+    sample_params:
+      gen_type: greedy
+
+qwen3-8b-instruct:
+  class: src.models.qwen.Qwen3Instruct
+  args:
+    path: path/to/Qwen3-8B
+    sample_params:
+      gen_type: greedy
+
+qwen2.5-72b-instruct:
+  args:
+    path: path/to/qwen2.5-72b-instruct
+    sample_params:
+      gen_type: default  # as judgement

@@ -1,0 +1,10 @@
+test-example:
+  class: src.dataset.BatchLoader
+  args:
+    file: path/to/huggingface  # or path/to/*.jsonl
+    ref_col: answer  # the reference answer column name in file
+    query_col: query  # question col for logger
+    batch_size: 1
+    # key_col: key  # Prepared for private data, this parameter allows you to set the key_col. The default is "key".
+    # extra_col: ["xxx", "xxx"]
+    # save_query_audio_dir: test_data/audios  # if set, will decode and save test wav when generating

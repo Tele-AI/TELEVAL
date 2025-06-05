@@ -1,0 +1,108 @@
+
+# -----------------chinese quiz dialect------------------
+chinese_quiz-sichuanese:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/chinese_quiz-sichuanese
+    ref_col: answer
+    query_col: query
+
+chinese_quiz-shanghainese:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/chinese_quiz-shanghainese
+    ref_col: answer
+    query_col: query
+
+chinese_quiz-northeastern_mandarin:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/chinese_quiz-northeastern_mandarin
+    ref_col: answer
+    query_col: query
+
+chinese_quiz-henan_dialect:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/chinese_quiz-henan_dialect
+    ref_col: answer
+    query_col: query
+
+chinese_quiz-cantonese:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/chinese_quiz-cantonese
+    ref_col: answer
+    query_col: query
+
+# -----------------livelihood policy dialect------------------
+livelihood_policy-sichuanese:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/livelihood_policy-sichuanese
+    ref_col: answer
+    query_col: query
+
+livelihood_policy-shanghainese:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/livelihood_policy-shanghainese
+    ref_col: answer
+    query_col: query
+
+livelihood_policy-northeastern_mandarin:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/livelihood_policy-northeastern_mandarin
+    ref_col: answer
+    query_col: query
+
+livelihood_policy-henan_dialect:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/livelihood_policy-henan_dialect
+    ref_col: answer
+    query_col: query
+
+livelihood_policy-cantonese:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/livelihood_policy-cantonese
+    ref_col: answer
+    query_col: query
+
+# -----------------chitchat dialect------------------
+chitchat-sichuanese:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/chitchat-sichuanese
+    ref_col: dialect
+    query_col: query
+
+chitchat-shanghainese:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/chitchat-shanghainese
+    ref_col: dialect
+    query_col: query
+
+chitchat-northeastern_mandarin:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/chitchat-northeastern_mandarin
+    ref_col: dialect
+    query_col: query
+
+chitchat-henan_dialect:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/chitchat-henan_dialect
+    ref_col: dialect
+    query_col: query
+
+chitchat-cantonese:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/chitchat-cantonese
+    ref_col: dialect
+    query_col: query

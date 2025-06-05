@@ -1,0 +1,30 @@
+
+emotion_understand:
+  class: src.config.EvalTaskCfg
+  args:
+    evaluator: llm_offline
+    summarizer: AvgThreshold
+
+aed_instruct:
+  class: src.config.EvalTaskCfg
+  args:
+    evaluator: aed_llm
+    summarizer: AvgThreshold
+
+multiturn:
+  class: src.config.EvalTaskCfg
+  args:
+    evaluator: multiturn_fluency_llm
+    summarizer: AvgThreshold
+
+dialect_follow:
+  class: src.config.EvalTaskCfg
+  args:
+    evaluator: dialect_llm
+    summarizer: AvgThreshold
+
+human_acceptance:
+  class: src.config.EvalTaskCfg
+  args:
+    evaluator: acceptance_llm
+    summarizer: AvgThreshold

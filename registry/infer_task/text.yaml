@@ -1,0 +1,229 @@
+# ------------------- for text LLM -------------------
+qa-text-test:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: test-zh
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-llamaqa-en:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: llamaqa-en
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-llamaqa-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: llamaqa-zh
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-triviaqa-en:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: triviaqa-en
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-triviaqa-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: triviaqa-zh
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-webq-en:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: webq-en
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-webq-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: webq-zh
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-chinesesimpleqa-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: chinesesimpleqa-zh
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-chinese_quiz-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: chinese_quiz-zh
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-livelihood_policy-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: livelihood_policy-zh
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+# --------------------choice---------------------
+text-ceval-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: ceval-zh
+    template: text-choice
+    model: qwen2-7b-instruct
+    eval_task: choice
+
+text-agieval-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: agieval-zh
+    template: text-choice
+    model: qwen2-7b-instruct
+    eval_task: choice
+
+# ----------------------dialect------------------
+text-sichuanese:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: chinese_quiz-sichuanese
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-shanghainese:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: chinese_quiz-shanghainese
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-northeastern_mandarin:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: chinese_quiz-northeastern_mandarin
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-henan_dialect:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: chinese_quiz-henan_dialect
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-cantonese:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: chinese_quiz-cantonese
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+# ---------------------livelihood--------------------------
+text-livelihood_policy-sichuanese:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: livelihood_policy-sichuanese
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-livelihood_policy-shanghainese:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: livelihood_policy-shanghainese
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-livelihood_policy-northeastern_mandarin:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: livelihood_policy-northeastern_mandarin
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-livelihood_policy-henan_dialect:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: livelihood_policy-henan_dialect
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-livelihood_policy-cantonese:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: livelihood_policy-cantonese
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+# -------------------- dialect follow---------------------
+text-chitchat-sichuanese:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: chitchat-sichuanese
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-chitchat-shanghainese:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: chitchat-shanghainese
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-chitchat-northeastern_mandarin:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: chitchat-northeastern_mandarin
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-chitchat-henan_dialect:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: chitchat-henan_dialect
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+text-chitchat-cantonese:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: chitchat-cantonese
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
+# -------------------- emotion---------------------
+text-emo:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: esd
+    template: text-emo
+    model: qwen2-7b-instruct
+    eval_task: emotion_understand

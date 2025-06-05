@@ -1,0 +1,10 @@
+exist_match:
+  class: src.evaluator.base.ExistMatch
+  args:
+    keep_punc: False
+    max_workers: 1
+
+single_option_match:
+  class: src.evaluator.base.SingleOptionMatch
+  args:
+    max_workers: 1

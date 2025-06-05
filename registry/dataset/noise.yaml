@@ -1,0 +1,465 @@
+# ------------------------bubble noise-----------------------------
+bubble_noise_-5dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/bubble_noise_-5dB
+    ref_col: answer
+    query_col: query
+
+bubble_noise_0dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/bubble_noise_0dB
+    ref_col: answer
+    query_col: query
+
+bubble_noise_5dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/bubble_noise_5dB
+    ref_col: answer
+    query_col: query
+
+bubble_noise_10dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/bubble_noise_10dB
+    ref_col: answer
+    query_col: query
+
+bubble_noise_15dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/bubble_noise_15dB
+    ref_col: answer
+    query_col: query
+
+bubble_noise_20dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/bubble_noise_20dB
+    ref_col: answer
+    query_col: query
+
+# ----------------------------------white noise----------------------------------
+white_noise_-5dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/white_noise_-5dB
+    ref_col: answer
+    query_col: query
+
+white_noise_0dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/white_noise_0dB
+    ref_col: answer
+    query_col: query
+
+white_noise_5dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/white_noise_5dB
+    ref_col: answer
+    query_col: query
+
+white_noise_10dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/white_noise_10dB
+    ref_col: answer
+    query_col: query
+
+white_noise_15dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/white_noise_15dB
+    ref_col: answer
+    query_col: query
+
+white_noise_20dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/white_noise_20dB
+    ref_col: answer
+    query_col: query
+
+# ---------------------------distortion------------------------------------
+distortion_rate0.1:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/distortion_rate0.1
+    ref_col: answer
+    query_col: query
+
+distortion_rate0.2:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/distortion_rate0.2
+    ref_col: answer
+    query_col: query
+
+distortion_rate0.3:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/distortion_rate0.3
+    ref_col: answer
+    query_col: query
+
+distortion_rate0.4:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/distortion_rate0.4
+    ref_col: answer
+    query_col: query
+
+distortion_rate0.5:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/distortion_rate0.5
+    ref_col: answer
+    query_col: query
+
+distortion_rate0.6:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/distortion_rate0.6
+    ref_col: answer
+    query_col: query
+
+# ---------------------------------lowpass_filtering------------------------------------
+lowpass_filtering_100Hz:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/lowpass_filtering_100Hz
+    ref_col: answer
+    query_col: query
+
+lowpass_filtering_200Hz:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/lowpass_filtering_200Hz
+    ref_col: answer
+    query_col: query
+
+lowpass_filtering_300Hz:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/lowpass_filtering_300Hz
+    ref_col: answer
+    query_col: query
+
+lowpass_filtering_400Hz:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/lowpass_filtering_400Hz
+    ref_col: answer
+    query_col: query
+
+lowpass_filtering_500Hz:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/lowpass_filtering_500Hz
+    ref_col: answer
+    query_col: query
+
+lowpass_filtering_600Hz:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/lowpass_filtering_600Hz
+    ref_col: answer
+    query_col: query
+
+lowpass_filtering_700Hz:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/lowpass_filtering_700Hz
+    ref_col: answer
+    query_col: query
+
+lowpass_filtering_800Hz:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/lowpass_filtering_800Hz
+    ref_col: answer
+    query_col: query
+
+# -----------------------------single background_speaker----------------------------
+single_background_speaker_-5dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/single_background_speaker_-5dB
+    ref_col: answer
+    query_col: query
+
+single_background_speaker_0dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/single_background_speaker_0dB
+    ref_col: answer
+    query_col: query
+
+single_background_speaker_5dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/single_background_speaker_5dB
+    ref_col: answer
+    query_col: query
+
+single_background_speaker_10dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/single_background_speaker_10dB
+    ref_col: answer
+    query_col: query
+
+single_background_speaker_15dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/single_background_speaker_15dB
+    ref_col: answer
+    query_col: query
+
+single_background_speaker_20dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/single_background_speaker_20dB
+    ref_col: answer
+    query_col: query
+
+# ----------------------------------------multi_background_speakers------------------------
+multi_background_speakers_-5dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/multi_background_speakers_-5dB
+    ref_col: answer
+    query_col: query
+
+multi_background_speakers_0dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/multi_background_speakers_0dB
+    ref_col: answer
+    query_col: query
+
+multi_background_speakers_5dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/multi_background_speakers_5dB
+    ref_col: answer
+    query_col: query
+
+multi_background_speakers_10dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/multi_background_speakers_10dB
+    ref_col: answer
+    query_col: query
+
+multi_background_speakers_15dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/multi_background_speakers_15dB
+    ref_col: answer
+    query_col: query
+
+multi_background_speakers_20dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/multi_background_speakers_20dB
+    ref_col: answer
+    query_col: query
+
+# ------------------------packet_loss------------------
+packet_loss_rate10:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/packet_loss_rate10
+    ref_col: answer
+    query_col: query
+
+packet_loss_rate20:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/packet_loss_rate20
+    ref_col: answer
+    query_col: query
+
+packet_loss_rate30:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/packet_loss_rate30
+    ref_col: answer
+    query_col: query
+
+packet_loss_rate40:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/packet_loss_rate40
+    ref_col: answer
+    query_col: query
+
+packet_loss_rate50:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/packet_loss_rate50
+    ref_col: answer
+    query_col: query
+
+# ---------------------------------------reverberation RT60----------------------------------
+reverberation_RT60_100ms:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/reverberation_RT60_100ms
+    ref_col: answer
+    query_col: query
+
+reverberation_RT60_500ms:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/reverberation_RT60_500ms
+    ref_col: answer
+    query_col: query
+
+reverberation_RT60_1000ms:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/reverberation_RT60_1000ms
+    ref_col: answer
+    query_col: query
+
+reverberation_RT60_2000ms:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/reverberation_RT60_2000ms
+    ref_col: answer
+    query_col: query
+
+reverberation_RT60_3000ms:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/reverberation_RT60_3000ms
+    ref_col: answer
+    query_col: query
+
+# ----------------------------------complex_envir--------------------------------
+complex_environments_-5dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/complex_environments_-5dB
+    ref_col: answer
+    query_col: query
+
+complex_environments_0dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/complex_environments_0dB
+    ref_col: answer
+    query_col: query
+
+complex_environments_5dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/complex_environments_5dB
+    ref_col: answer
+    query_col: query
+
+complex_environments_10dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/complex_environments_10dB
+    ref_col: answer
+    query_col: query
+
+complex_environments_15dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/complex_environments_15dB
+    ref_col: answer
+    query_col: query
+
+complex_environments_20dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/complex_environments_20dB
+    ref_col: answer
+    query_col: query
+
+# ---------------------------------complex envir reverb----------------------------
+complex_environments_reverb_-5dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/complex_environments_reverb_-5dB
+    ref_col: answer
+    query_col: query
+
+complex_environments_reverb_0dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/complex_environments_reverb_0dB
+    ref_col: answer
+    query_col: query
+
+complex_environments_reverb_5dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/complex_environments_reverb_5dB
+    ref_col: answer
+    query_col: query
+
+complex_environments_reverb_10dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/complex_environments_reverb_10dB
+    ref_col: answer
+    query_col: query
+
+complex_environments_reverb_15dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/complex_environments_reverb_15dB
+    ref_col: answer
+    query_col: query
+
+complex_environments_reverb_20dB:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/complex_environments_reverb_20dB
+    ref_col: answer
+    query_col: query
+
+# -------------------------------different distance RT60---------------------------
+different_distance_1m:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/different_distance_1m
+    ref_col: answer
+    query_col: query
+
+different_distance_2m:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/different_distance_2m
+    ref_col: answer
+    query_col: query
+
+different_distance_3m:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/different_distance_3m
+    ref_col: answer
+    query_col: query
+
+different_distance_4m:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/different_distance_4m
+    ref_col: answer
+    query_col: query
+
+different_distance_5m:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/noise-zh/different_distance_5m
+    ref_col: answer
+    query_col: query

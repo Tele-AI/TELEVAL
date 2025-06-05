@@ -1,0 +1,23 @@
+paraformer-zh:
+  class: src.evaluator.asr.ASR
+  args:
+    model: paraformer-zh # path/to/speech_paraformer-large-vad-punc_asr_nat-zh-cn-16k-common-vocab8404-pytorch
+    max_workers: 1
+
+MS-DNSMOS:
+  class: src.evaluator.dnsmos.DNSMOS
+  args:
+    model: path/to/sig_bak_ovr.onnx
+    max_workers: 1
+
+emo2vec-large:
+  class: src.evaluator.emo2vec.Emo2vec
+  args:
+    model: iic/emotion2vec_plus_large  # path/to/emotion2vec_large
+    strict: True
+
+TeleSpeech-Dialect:
+  class: src.evaluator.dialect.DialectClassify
+  args:
+    model: path/to/ecapa_tdnn-mfcc40-ch512-cls14.onnx
+    max_workers: 1

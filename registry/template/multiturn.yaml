@@ -1,0 +1,15 @@
+multiturn-audio:
+  class: src.prompt.template.DataTemplate
+  args:
+    template: |
+      {
+        "nrounds": "{{ nrounds }}",
+        "dialogue": [
+          {% for round in content %}
+          {"role": "A", "round": "{{ loop.index }}", "content": { "audio": "{{ round.audio[0] }}", "text": "{{ round.text[0] }}"}},
+          {"role": "B", "round": "{{ loop.index }}", "content": { "audio": "{{ round.audio[1] }}", "text": "{{ round.text[1] }}"}}
+          {% if not loop.last %},{% endif %}
+          {% endfor %}
+        ]
+      }
+

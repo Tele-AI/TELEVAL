@@ -1,0 +1,24 @@
+aed-audio-instruct:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: aed_combine-zh
+    template: audio-instruct-caption
+    model: qwen2_5_omni
+    eval_task: aed_instruct
+
+aed-text-instruct:  # not recommand
+  class: src.config.InferTaskCfg
+  args:
+    dataset: aed_combine-zh
+    template: text-instruct-caption
+    model: qwen2_5_omni
+    eval_task: aed_instruct
+
+emotion-esd:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: esd
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    eval_task: emotion_response # emotion_understand  #["wer", "dnsmos", "emotion_response"]
+    save_pred_audio: True

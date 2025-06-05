@@ -1,0 +1,7 @@
+aed_combine-zh:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/aed_combine-zh
+    ref_col: answer
+    query_col: query
+

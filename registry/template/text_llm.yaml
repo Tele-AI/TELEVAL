@@ -1,0 +1,28 @@
+# for text LLM
+text-choice:
+  class: src.prompt.template.DataTemplate
+  args:
+    template:
+      - role: user
+        content:
+          text: "以下是单选题，请以'正确答案是'为引导，直接给出答案选项。例如'正确答案是C'。{{query}}"
+
+text-emo:
+  class: src.prompt.template.DataTemplate
+  args:
+    template:
+      - role: user
+        content:
+          text: "用户以 '{{query_emo_zh}}' 的情绪输入 '{{query}}' 。结合用户的情绪作出适当的回答。"
+
+# as judge
+judge-qwen2.5_72b_instruct:
+  class: src.prompt.template.DataTemplate
+  args:
+    template:
+      - role: system
+        content:
+          text: "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
+      - role: user
+        content:
+          text: "{{text}}"

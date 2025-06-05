@@ -1,0 +1,23 @@
+wer: 
+  class: src.config.EvalTaskCfg
+  args:
+    evaluator: paraformer-zh
+    summarizer: AvgWER
+
+dnsmos:
+  class: src.config.EvalTaskCfg
+  args:
+    evaluator: MS-DNSMOS
+    summarizer: AvgMOS
+
+emotion_response:
+  class: src.config.EvalTaskCfg
+  args:
+    evaluator: emo2vec-large
+    summarizer: AvgInfo
+
+dialect_classify:
+  class: src.config.EvalTaskCfg
+  args:
+    evaluator: TeleSpeech-Dialect
+    summarizer: AvgInfo

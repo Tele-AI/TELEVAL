@@ -1,0 +1,19 @@
+audio-instruct-caption:
+  class: src.prompt.template.DataTemplate
+  args:
+    template:
+      - role: user
+        content:
+          audio: "{{audio_combine}}"
+
+text-instruct-caption:
+  class: src.prompt.template.DataTemplate
+  args:
+    template:
+      - role: instruct
+        content:
+          text: "{{query}}"
+      - role: user
+        content:
+          audio: "{{audio}}"
+          

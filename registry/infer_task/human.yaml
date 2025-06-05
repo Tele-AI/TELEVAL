@@ -1,0 +1,8 @@
+acceptance-human-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: human_acceptance-zh
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: human_acceptance

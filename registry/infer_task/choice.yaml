@@ -1,0 +1,17 @@
+choice-ceval-zh: 
+  class: src.config.InferTaskCfg
+  args:
+    dataset: ceval-zh
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: choice
+
+choice-agieval-zh: 
+  class: src.config.InferTaskCfg
+  args:
+    dataset: agieval-zh
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: choice

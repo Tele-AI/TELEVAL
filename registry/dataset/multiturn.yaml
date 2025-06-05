@@ -1,0 +1,6 @@
+
+multiturn-chitchat-zh:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/multiturn-chitchat-zh
+    batch_size: 1  # suggest bsz=1 since multiturn may OOM

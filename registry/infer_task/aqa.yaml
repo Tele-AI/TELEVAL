@@ -1,0 +1,83 @@
+
+# -------------------------------audio qa-------------------------------------
+aqa-llamaqa-en:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: llamaqa-en
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+aqa-llamaqa-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: llamaqa-zh
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+aqa-triviaqa-en:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: triviaqa-en
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+aqa-triviaqa-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: triviaqa-zh
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+aqa-webq-en:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: webq-en
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+aqa-webq-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: webq-zh
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+aqa-chinesesimpleqa-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: chinesesimpleqa-zh
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+aqa-chinese_quiz-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: chinese_quiz-zh
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+aqa-livelihood_policy-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: livelihood_policy-zh
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+

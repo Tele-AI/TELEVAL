@@ -1,0 +1,18 @@
+AvgInfo: 
+  class: src.summarizer.summarizer.AvgInfo
+  args: {}
+
+AvgThreshold:
+  class: src.summarizer.summarizer.AvgThreshold
+  args:
+    rescale: power # linear
+    power: 2
+    threshold: 60
+
+AvgWER:
+  class: src.summarizer.summarizer.AvgWER
+  args: {}
+
+AvgMOS:
+  class: src.summarizer.summarizer.AvgMOS
+  args: {}

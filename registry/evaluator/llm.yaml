@@ -1,0 +1,72 @@
+acceptance_llm:
+  class: src.evaluator.llm.LLMScorer
+  args: 
+    llm_name: gpt4o1
+    judge_task: acceptance
+    api_keys:
+      key1: "xxx"
+      key2: "xxx"
+      key3: "xxx"
+      key4: "xxx"
+    max_workers: 4
+
+emo_llm:
+  class: src.evaluator.llm.LLMScorer
+  args: 
+    llm_name: gpt4o1
+    judge_task: emotion_understand
+    api_keys:
+      key1: "xxx"
+      key2: "xxx"
+      key3: "xxx"
+      key4: "xxx"
+    max_workers: 4
+
+aed_llm:
+  class: src.evaluator.llm.LLMScorer
+  args: 
+    llm_name: gpt4o1
+    judge_task: aed
+    api_keys:
+      key1: "xxx"
+      key2: "xxx"
+      key3: "xxx"
+      key4: "xxx"
+    max_workers: 4
+
+multiturn_fluency_llm:
+  class: src.evaluator.llm.LLMScorer
+  args: 
+    llm_name: gpt4o1
+    judge_task: multiturn_fluency
+    api_keys:
+      key1: "xxx"
+      key2: "xxx"
+      key3: "xxx"
+      key4: "xxx"
+    max_workers: 4
+
+dialect_llm:
+  class: src.evaluator.llm.LLMScorer
+  args: 
+    llm_name: gpt4o1
+    judge_task: dialect_follow
+    api_keys:
+      key1: "xxx"
+      key2: "xxx"
+      key3: "xxx"
+      key4: "xxx"
+    max_workers: 4
+
+llm_offline:
+  class: src.evaluator.llm.LLMOfflineScorer
+  args: 
+    llm_name: qwen2.5-72b-instruct
+    template: judge-qwen2.5_72b_instruct
+    judge_task: dialect_follow
+    generate_params:
+      ngpus: 8
+      max_tokens: 1024
+      temperature: 0.7
+      top_p: 0.8
+      repetition_penalty: 1.05
