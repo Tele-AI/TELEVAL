@@ -1,12 +1,7 @@
 import logging
-import re
 from typing import Dict, Any
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from src.models.base import Model
-from src.prompt.llm_judge import (
-    exp49_ckpt1200_prompt,
-    system_prompt_with_emotion_dialect_age_text_notag
-)
 
 logger = logging.getLogger(__name__)
 
@@ -38,7 +33,7 @@ class Qwen2Instruct(Model):
         self.system_prompt_qwen2d5 = "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
 
     def generate_once(self, audio, **kwargs):
-        system_prompt = exp49_ckpt1200_prompt #self.system_prompt_qwen2d5
+        system_prompt = self.system_prompt_qwen2d5
         content = kwargs.get("instruct", "") + kwargs["query"]
             
         messages = [

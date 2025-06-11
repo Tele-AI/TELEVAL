@@ -55,7 +55,4 @@ if __name__ == "__main__":
     for dataset, repo_data_dir in all_dataset.items():
         parts = repo_data_dir.split("/", 2)
         repo_or_path, data_dir_pattern = "/".join(parts[:2]), parts[-1]
-        print("repo_or_path, data_dir_pattern: ", repo_or_path, data_dir_pattern)
-        # export_parquet_to_jsonl(repo_or_path, data_dir_pattern, save_root_dir)
-        export_parquet_to_jsonl(data_dir_pattern="chinese_quiz-zh")  # noise-zh/bubble_-5dB-zh
-        raise RuntimeError
+        export_parquet_to_jsonl(repo_or_path, data_dir_pattern, save_root_dir)

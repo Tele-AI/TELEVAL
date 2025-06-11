@@ -6,3 +6,11 @@ esd:
     query_col: query
     extra_col: ["query_emo_zh", "ref_answer", "ref_answer_emo", "ref_answer_emo_zh"]
     batch_size: 1
+
+aed_combine-zh:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TeleSpeech-AudioBench/aed_combine-zh
+    ref_col: answer
+    query_col: query
+

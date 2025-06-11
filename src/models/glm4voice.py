@@ -89,7 +89,7 @@ class GLM4voice(Model):
                 "top_k": None,
                 "num_beams": 1,
                 "temperature": 0,
-                "top_p": 1.0        
+                "top_p": 1.0
             },
             "default": {
                 "max_new_tokens": 2000,
@@ -98,7 +98,7 @@ class GLM4voice(Model):
             }
         }
         self.generation_config = config.get(self.sample_params.get("gen_type", "greedy"), None)
-        logger.info("generation_config: {}".format(self.generation_config)) 
+        logger.info("generation_config: {}".format(self.generation_config))
 
     @torch.inference_mode()
     def _generate_stream(self, params):
