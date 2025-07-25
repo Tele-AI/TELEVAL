@@ -20,7 +20,7 @@ class Emo2vec(Evaluator):
                 label.split("/")[-1].lower(): score
                 for label, score in zip(output["labels"], output["scores"])
             }
-            ref_emotions = [emo.lower() for emo in info["ref_answer_emo"]]
+            ref_emotions = [emo.lower() for emo in info["answer_emo"]]
 
             if self.strict:
                 neutral_count = sum(1 for emo in ref_emotions if emo == "neutral")

@@ -22,7 +22,7 @@ def collect_yaml_file_info(yaml_dir):
 
     return result
 
-def export_parquet_to_jsonl(repo_or_path="Tele-AI/TeleSpeech-AudioBench", data_dir_pattern="llamaqa-zh", save_root_dir="./", is_local=False):
+def export_parquet_to_jsonl(repo_or_path="Tele-AI/TELEVAL", data_dir_pattern="llamaqa-zh", save_root_dir="./", is_local=False):
     print(f"processing {repo_or_path}, {data_dir_pattern} data from huggingface, saving to {save_root_dir}")
     if "*.parquet" in data_dir_pattern:
         base_subdir = os.path.normpath(os.path.dirname(data_dir_pattern))
@@ -50,8 +50,8 @@ def export_parquet_to_jsonl(repo_or_path="Tele-AI/TeleSpeech-AudioBench", data_d
     print(f"Audio files saved under: {audio_output_dir}")
 
 if __name__ == "__main__":
-    save_root_dir = "./"
-    all_dataset = collect_yaml_file_info("../registry/dataset")
+    save_root_dir = "audiobench_data"
+    all_dataset = collect_yaml_file_info("registry/dataset")
     for dataset, repo_data_dir in all_dataset.items():
         parts = repo_data_dir.split("/", 2)
         repo_or_path, data_dir_pattern = "/".join(parts[:2]), parts[-1]

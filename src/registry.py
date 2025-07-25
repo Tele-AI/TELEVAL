@@ -56,13 +56,13 @@ class Registry:
         self, name: str, d: RawRegistry, object: str, config_only: bool = False, **kwargs: dict
     ) -> Optional[T]:
         if name not in d:
-            logger.warning(
+            logger.error(
                 (
                     f"{object} '{name}' not found. "
                     f"Closest matches: {difflib.get_close_matches(name, d.keys(), n=5)}"
                 )
             )
-            return None
+            raise ValueError(f"Error object {object} '{name}': {e}")
 
         logger.debug(f"Looking for {name}")
 

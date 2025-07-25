@@ -3,12 +3,29 @@ multiturn-audio:
   args:
     template: |
       {
-        "nrounds": "{{ nrounds }}",
+        "nrounds": {{ nrounds }},
         "dialogue": [
-          {% for round in content %}
-          {"role": "A", "round": "{{ loop.index }}", "content": { "audio": "{{ round.audio[0] }}", "text": "{{ round.text[0] }}"}},
-          {"role": "B", "round": "{{ loop.index }}", "content": { "audio": "{{ round.audio[1] }}", "text": "{{ round.text[1] }}"}}
-          {% if not loop.last %},{% endif %}
+          {% for i in range(1, nrounds + 1) %}
+          {
+            "role": "A",
+            "round": "{{ i }}",
+            "content": {
+              "audio": {{ getvar("user_audio" ~ i) | tojson }},
+              "text": {{ getvar("user_text" ~ i) | tojson }}
+            }
+          },
+          {
+            "role": "B",
+            "round": "{{ i }}",
+            "content": {
+              "audio": {{ getvar("bot_audio" ~ i) | tojson }},
+              "text": {% if loop.last and answer is not none %}
+                        {{ answer | tojson }}
+                      {% else %}
+                        {{ getvar("bot_text" ~ i) | tojson }}
+                      {% endif %}
+            }
+          }{% if not loop.last %},{% endif %}
           {% endfor %}
         ]
       }

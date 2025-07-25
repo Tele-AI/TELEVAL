@@ -1,0 +1,15 @@
+aed-audio-instruct:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: aed_combine-zh
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    eval_task: aed_instruct
+
+aed-text-instruct:  # not recommand
+  class: src.config.InferTaskCfg
+  args:
+    dataset: aed_combine-zh
+    template: text-instruct-caption
+    model: qwen2_5_omni
+    eval_task: aed_instruct

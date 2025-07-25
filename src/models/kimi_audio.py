@@ -1,4 +1,5 @@
 import logging
+import os
 import soundfile as sf
 from typing import Dict, Any
 
@@ -15,7 +16,7 @@ class Kimi(Model):
             whisper_path=whisper_path,
             glm4_tokenizer=glm4_tokenizer,
             load_detokenizer=True,
-            split_device=False,
+            split_device=False,  # split need 4.48.3
         )
 
         config = {

@@ -25,7 +25,7 @@ class LLMScorer(Evaluator):
         self.urls = {
             key: (
                 f"https://{key}.openai.azure.com/"
-                f"openai/deployments/{llm_name}/chat/completions?api-version=2024-02-01"
+                f"openai/deployments/{llm_name}/chat/completions?api-version=2025-01-01-preview"
             )
             for key in api_keys
         }

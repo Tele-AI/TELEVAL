@@ -1,0 +1,11 @@
+multiturn-memory-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: multiturn_memory-zh
+    template: multiturn-audio
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+    reverse_spkr: False
+    use_model_history: True
+    save_latest_only: True

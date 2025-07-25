@@ -13,3 +13,14 @@ zeroshot-qa:
       - role: user
         content:
           text: "{{query}}"
+
+text-instruct-caption:  # not recommand
+  class: src.prompt.template.DataTemplate
+  args:
+    template:
+      - role: instruct
+        content:
+          text: "{{query}}"
+      - role: user
+        content:
+          audio: "{{audio_only}}"

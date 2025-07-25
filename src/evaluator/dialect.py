@@ -80,4 +80,4 @@ class DialectClassify(Evaluator):
         logger.info(f"key: {pred_info['key']} recognition dialect: {mapped_dialect}")
 
         score = int(mapped_dialect == ref) if mapped_dialect else 0
-        return {"key": pred_info["key"], "score": score}    
+        return {"key": pred_info["key"], "score": score}

@@ -1,24 +1,26 @@
-aed-audio-instruct:
-  class: src.config.InferTaskCfg
-  args:
-    dataset: aed_combine-zh
-    template: audio-instruct-caption
-    model: qwen2_5_omni
-    eval_task: aed_instruct
-
-aed-text-instruct:  # not recommand
-  class: src.config.InferTaskCfg
-  args:
-    dataset: aed_combine-zh
-    template: text-instruct-caption
-    model: qwen2_5_omni
-    eval_task: aed_instruct
-
 emotion-esd:
   class: src.config.InferTaskCfg
   args:
-    dataset: esd
+    dataset: esd-zh
     template: zeroshot-aqa
     model: qwen2_5_omni
-    eval_task: emotion_response # emotion_understand  #["wer", "dnsmos", "emotion_response"]
+    eval_task: emotion_understand  # ["emotion_understand", "wer", "dnsmos", "emotion_response"]
     save_pred_audio: True
+
+aqa-para_mix300-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: para_mix300-zh
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    eval_task: para_care  # ["para_care", "basic"]
+    save_pred_audio: False
+
+care-age-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: age-zh
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    eval_task: age_care
+    save_pred_audio: False

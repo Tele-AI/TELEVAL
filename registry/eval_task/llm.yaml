@@ -2,19 +2,13 @@
 emotion_understand:
   class: src.config.EvalTaskCfg
   args:
-    evaluator: llm_offline
+    evaluator: emo_llm
     summarizer: AvgThreshold
 
 aed_instruct:
   class: src.config.EvalTaskCfg
   args:
     evaluator: aed_llm
-    summarizer: AvgThreshold
-
-multiturn:
-  class: src.config.EvalTaskCfg
-  args:
-    evaluator: multiturn_fluency_llm
     summarizer: AvgThreshold
 
 dialect_follow:
@@ -27,4 +21,22 @@ human_acceptance:
   class: src.config.EvalTaskCfg
   args:
     evaluator: acceptance_llm
+    summarizer: AvgThreshold
+
+human_likeness:
+  class: src.config.EvalTaskCfg
+  args:
+    evaluator: human_likeness_llm
+    summarizer: AvgThreshold
+
+para_care:
+  class: src.config.EvalTaskCfg
+  args:
+    evaluator: para_care_llm
+    summarizer: AvgThreshold
+
+age_care:
+  class: src.config.EvalTaskCfg
+  args:
+    evaluator: age_care_llm
     summarizer: AvgThreshold

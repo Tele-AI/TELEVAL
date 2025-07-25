@@ -1,14 +1,14 @@
-# ------------------------bubble noise-----------------------------
-aqa-bubble_noise-zh:
+# ------------------------babble noise-----------------------------
+aqa-babble_noise-zh:
   class: src.config.InferTaskCfg
   args:
     dataset:
-      - "bubble_noise_-5dB"
-      - "bubble_noise_0dB"
-      - "bubble_noise_5dB"
-      - "bubble_noise_10dB"
-      - "bubble_noise_15dB"
-      - "bubble_noise_20dB"
+      - "babble_noise_-5dB"
+      - "babble_noise_0dB"
+      - "babble_noise_5dB"
+      - "babble_noise_10dB"
+      - "babble_noise_15dB"
+      - "babble_noise_20dB"
     template: zeroshot-aqa
     model: qwen2_5_omni
     save_pred_audio: False

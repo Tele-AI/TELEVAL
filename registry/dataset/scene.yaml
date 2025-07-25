@@ -1,0 +1,6 @@
+aed_combine-zh:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TELEVAL/aed_combine-zh
+    ref_col: answer
+    query_col: query

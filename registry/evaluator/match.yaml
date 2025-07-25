@@ -8,3 +8,4 @@ single_option_match:
   class: src.evaluator.base.SingleOptionMatch
   args:
     max_workers: 1
+    cushion: True

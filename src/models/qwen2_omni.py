@@ -3,7 +3,6 @@ import re
 import torch
 from typing import Dict, Any
 import soundfile as sf
-import gc
 from src.models.base import Model
 
 logger = logging.getLogger(__name__)

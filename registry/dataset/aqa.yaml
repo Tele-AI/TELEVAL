@@ -1,7 +1,7 @@
 llamaqa-en:
   class: src.dataset.BatchLoader
   args:
-    file: Tele-AI/TeleSpeech-AudioBench/llamaqa-en
+    file: Tele-AI/TELEVAL/llamaqa-en
     ref_col: answer
     query_col: query
     batch_size: 1
@@ -9,7 +9,7 @@ llamaqa-en:
 llamaqa-zh:
   class: src.dataset.BatchLoader
   args:
-    file: Tele-AI/TeleSpeech-AudioBench/llamaqa-zh
+    file: Tele-AI/TELEVAL/llamaqa-zh
     ref_col: answer
     query_col: query
     batch_size: 1
@@ -17,7 +17,7 @@ llamaqa-zh:
 triviaqa-en:
   class: src.dataset.BatchLoader
   args:
-    file: Tele-AI/TeleSpeech-AudioBench/triviaqa-en
+    file: Tele-AI/TELEVAL/triviaqa-en
     ref_col: answer
     query_col: query
     batch_size: 1
@@ -25,7 +25,7 @@ triviaqa-en:
 triviaqa-zh:
   class: src.dataset.BatchLoader
   args:
-    file: Tele-AI/TeleSpeech-AudioBench/triviaqa-zh
+    file: Tele-AI/TELEVAL/triviaqa-zh
     ref_col: answer
     query_col: query
     batch_size: 1
@@ -33,7 +33,7 @@ triviaqa-zh:
 webq-en:
   class: src.dataset.BatchLoader
   args:
-    file: Tele-AI/TeleSpeech-AudioBench/webq-en
+    file: Tele-AI/TELEVAL/webq-en
     ref_col: answer
     query_col: query
     batch_size: 1
@@ -41,7 +41,7 @@ webq-en:
 webq-zh:
   class: src.dataset.BatchLoader
   args:
-    file: Tele-AI/TeleSpeech-AudioBench/webq-zh
+    file: Tele-AI/TELEVAL/webq-zh
     ref_col: answer
     query_col: query
     batch_size: 1
@@ -49,7 +49,7 @@ webq-zh:
 chinesesimpleqa-zh:
   class: src.dataset.BatchLoader
   args:
-    file: Tele-AI/TeleSpeech-AudioBench/chinesesimpleqa-zh
+    file: Tele-AI/TELEVAL/chinesesimpleqa-zh
     ref_col: answer
     query_col: query
     batch_size: 1
@@ -57,7 +57,7 @@ chinesesimpleqa-zh:
 chinese_quiz-zh:
   class: src.dataset.BatchLoader
   args:
-    file: Tele-AI/TeleSpeech-AudioBench/chinese_quiz-zh
+    file: Tele-AI/TELEVAL/chinese_quiz-zh
     ref_col: answer
     query_col: query
     batch_size: 1
@@ -65,7 +65,7 @@ chinese_quiz-zh:
 livelihood_policy-zh:
   class: src.dataset.BatchLoader
   args:
-    file: Tele-AI/TeleSpeech-AudioBench/livelihood_policy-zh
+    file: Tele-AI/TELEVAL/livelihood_policy-zh
     ref_col: answer
     query_col: query
     batch_size: 1

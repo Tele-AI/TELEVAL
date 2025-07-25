@@ -2,13 +2,23 @@ acceptance_llm:
   class: src.evaluator.llm.LLMScorer
   args: 
     llm_name: gpt4o1
-    judge_task: acceptance
+    judge_task: value_align
     api_keys:
       key1: "xxx"
       key2: "xxx"
       key3: "xxx"
-      key4: "xxx"
-    max_workers: 4
+    max_workers: 3
+
+human_likeness_llm:
+  class: src.evaluator.llm.LLMScorer
+  args: 
+    llm_name: gpt4o1
+    judge_task: humanlike
+    api_keys:
+      key1: "xxx"
+      key2: "xxx"
+      key3: "xxx"
+    max_workers: 3
 
 emo_llm:
   class: src.evaluator.llm.LLMScorer
@@ -19,8 +29,7 @@ emo_llm:
       key1: "xxx"
       key2: "xxx"
       key3: "xxx"
-      key4: "xxx"
-    max_workers: 4
+    max_workers: 3
 
 aed_llm:
   class: src.evaluator.llm.LLMScorer
@@ -31,20 +40,7 @@ aed_llm:
       key1: "xxx"
       key2: "xxx"
       key3: "xxx"
-      key4: "xxx"
-    max_workers: 4
-
-multiturn_fluency_llm:
-  class: src.evaluator.llm.LLMScorer
-  args: 
-    llm_name: gpt4o1
-    judge_task: multiturn_fluency
-    api_keys:
-      key1: "xxx"
-      key2: "xxx"
-      key3: "xxx"
-      key4: "xxx"
-    max_workers: 4
+    max_workers: 3
 
 dialect_llm:
   class: src.evaluator.llm.LLMScorer
@@ -55,18 +51,39 @@ dialect_llm:
       key1: "xxx"
       key2: "xxx"
       key3: "xxx"
-      key4: "xxx"
-    max_workers: 4
+    max_workers: 3
+
+para_care_llm:
+  class: src.evaluator.llm.LLMScorer
+  args: 
+    llm_name: gpt4o1
+    judge_task: para_care
+    api_keys:
+      key1: "xxx"
+      key2: "xxx"
+      key3: "xxx"
+    max_workers: 3
+
+age_care_llm:
+  class: src.evaluator.llm.LLMScorer
+  args: 
+    llm_name: gpt4o1
+    judge_task: age_care
+    api_keys:
+      key1: "xxx"
+      key2: "xxx"
+      key3: "xxx"
+    max_workers: 3
 
 llm_offline:
   class: src.evaluator.llm.LLMOfflineScorer
   args: 
-    llm_name: qwen2.5-72b-instruct
-    template: judge-qwen2.5_72b_instruct
-    judge_task: dialect_follow
+    llm_name: qwen2.3-72b-instruct
+    template: judge-qwen2.3_72b_instruct
+    judge_task: emotion_understand
     generate_params:
       ngpus: 8
       max_tokens: 1024
       temperature: 0.7
       top_p: 0.8
-      repetition_penalty: 1.05
+      repetition_penalty: 1.03

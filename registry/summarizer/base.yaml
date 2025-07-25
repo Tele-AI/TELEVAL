@@ -5,7 +5,7 @@ AvgInfo:
 AvgThreshold:
   class: src.summarizer.summarizer.AvgThreshold
   args:
-    rescale: power # linear
+    rescale: power # linear  power
     power: 2
     threshold: 60
 

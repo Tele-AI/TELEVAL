@@ -1,0 +1,7 @@
+gpt4o-audio:
+  class: src.models.api.GPT4oAudio
+  args:
+    llm_name: gpt-4o-audio-preview
+    api_keys:
+      key1: "xxx"
+    max_workers: 1

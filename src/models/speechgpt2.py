@@ -118,7 +118,7 @@ class SpeechGPT2(Model):
         self.generation_config = config.get(self.sample_params.get("gen_type", "greedy"), None)
         logger.info("generation_config: {}".format(self.generation_config))
 
-    def _preprocess(
+    def preprocess(
         self,
         input: Union[None, str] = None,
         add_silence_at_end=True,
@@ -185,7 +185,7 @@ class SpeechGPT2(Model):
 
         return input_ids
 
-    def _generate_wav(self,  generated_ids, detokenized_text, text):
+    def generate_wav(self,  generated_ids, detokenized_text, text):
         answer = {
             "speech": "",
             "thought": detokenized_text,
@@ -238,7 +238,7 @@ class SpeechGPT2(Model):
             raise ValueError(f"using text in for speechgpt2")
 
         with torch.no_grad():
-            input_ids = self._preprocess(
+            input_ids = self.preprocess(
                 input=audio,
                 audio_channels=self.audio_channels,
                 group_size=self.group_size,
@@ -273,7 +273,7 @@ class SpeechGPT2(Model):
             response = self.REGEX_HEAD.sub("", detokenized_text)
 
             if kwargs.get("pred_audio") is not None:
-                wav =  self._generate_wav(generated_ids, detokenized_text, text)
+                wav =  self.generate_wav(generated_ids, detokenized_text, text)
                 sf.write(kwargs["pred_audio"], wav[1], wav[0])
 
         return {"pred": response, "pred_audio": kwargs.get("pred_audio")}
@@ -289,7 +289,7 @@ class SpeechGPT2(Model):
             history_id = []
 
         with torch.no_grad():
-            input_ids = self._preprocess(
+            input_ids = self.preprocess(
                 input=audio,
                 audio_channels=self.audio_channels,
                 group_size=self.group_size,
@@ -300,6 +300,7 @@ class SpeechGPT2(Model):
 
             input_ids = input_ids.T.reshape(1, -1)
             input_ids = input_ids.to(self.model.device)
+            # input_ids = torch.cat(self.history + [input_ids], dim=-1)
             input_ids = torch.cat(history_id + [input_ids], dim=-1)
 
             prompt_length = input_ids.shape[1] // (self.audio_channels + 1)
@@ -318,8 +319,9 @@ class SpeechGPT2(Model):
                 generation_config,
                 stopping_criteria=stopping_criteria,
             )
-
+            # generated_ids = generated_ids.to(self.model.device)
             his = generated_ids.cpu()
+            # self.history = [generated_ids]
 
             generated_ids = (
                 generated_ids.int().cpu().reshape(-1, 4).T[:, prompt_length:]
@@ -329,7 +331,7 @@ class SpeechGPT2(Model):
             response = self.REGEX_HEAD.sub("", detokenized_text)
 
             if kwargs.get("pred_audio") is not None:
-                wav =  self._generate_wav(generated_ids, detokenized_text, text)
+                wav =  self.generate_wav(generated_ids, detokenized_text, text)
                 sf.write(kwargs["pred_audio"], wav[1], wav[0])
 
         return {"pred": response, "pred_audio": kwargs.get("pred_audio"), "cache": his}

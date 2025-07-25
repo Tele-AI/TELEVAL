@@ -40,30 +40,37 @@ class Model:
 
                 reverse = kwargs.get("reverse_spkr", False)
                 use_model_history = kwargs.get("use_model_history", False)
+                save_latest_only = kwargs.get("save_latest_only", False)
 
                 # alternate grouping, with the default parity division user/assistant
                 user_audio, assistant_audio = (audio_list[1::2], audio_list[0::2]) if reverse else (audio_list[0::2], audio_list[1::2])
                 user_text, assistant_text = (text_list[1::2], text_list[0::2]) if reverse else (text_list[0::2], text_list[1::2])
 
                 nrounds = min(len(user_audio), len(user_text), len(assistant_text))
-                results = []
-                user_history, user_history_text, assistant_history = [], [], []
+                results, history = [], []
+                user_history, assistant_history = [], []
                 generate_kwargs = {"instruct": processed_input.get("instruct")}
                 for i in range(nrounds):
                     logger.info(f"Processing round {i+1}")
-                    user_history_text.append(user_text[i])
+                    current_history = list(history)
                     if kwargs.get("pred_audio"):
                         generate_kwargs["pred_audio"] = os.path.join(dir_path, f"{base}_round{i + 1}{ext}")
+                    generate_kwargs["user_query_history"] = user_text[:i]
+                    generate_kwargs["user_query"] = user_text[i]
 
                     response = self.generate_multiturn(user_audio[i], user_history, assistant_history, **generate_kwargs)
-                    results.append({
-                        "nround": i + 1,
-                        "pred": response.get("pred"),
-                        "pred_audio": response.get("pred_audio"),
-                        "query": user_text[i],
-                        "ref": assistant_text[i],
-                        "history": text_list[:2*i],
-                    })
+                    if not save_latest_only or i == nrounds - 1:
+                        results.append({
+                            "nround": i + 1,
+                            "rounds": nrounds,
+                            "pred": response.get("pred"),
+                            "pred_audio": response.get("pred_audio"),
+                            "query": user_text[i],
+                            "ref": assistant_text[i],
+                            "history": current_history
+                        })
+
+                    history.extend([user_text[i], response["pred"]])
                     user_history.append(user_audio[i])
                     assist_his = response.get("his") if response.get("his") is not None else response["pred"]
                     assistant_history.append(assist_his if use_model_history else assistant_text[i])
@@ -90,6 +97,13 @@ class Model:
             ]
         else:
             return _generate(inputs, **kwargs)
+    
+
+    def generate_once(self, audio: str, **kwargs) -> str:
+        raise NotImplementedError
+
+    def generate_multiturn(self, audio: str, user_history: List[Any], assistant_history: List[Any], **kwargs) -> str:
+        raise NotImplementedError
 
     def _split_kwargs(self, kwargs: dict, idx: int) -> dict:
         new_kwargs = {}
@@ -173,7 +187,7 @@ class Model:
                     "nrounds": "2",
                     "dialogue": [
                         {"role": "A", "round": "1", "content": {"audio": audio1, "text": text1}},
-                        {"role": "B", "round": "1", "content": {"audio": audio2, "text": text2}},
+                        {"role": "B", "round": "1", "content": {"audio": audio2/None, "text": text2}},
                         ...
                     ],
                     "instruct": {"content": {"text": instruct_text}}
@@ -213,9 +227,3 @@ class Model:
             return _process_single_turn(input_data)
         else:
             raise ValueError("Input data format is not recognized.")
-
-    def generate_once(self, audio: str, **kwargs) -> str:
-        raise NotImplementedError
-
-    def generate_multiturn(self, audio: str, user_history: List[Any], assistant_history: List[Any], **kwargs) -> str:
-        raise NotImplementedError

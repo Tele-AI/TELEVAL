@@ -40,12 +40,15 @@ class TupleEncoder:
 
 class TupleJSONLConverter:
     @staticmethod
-    def load(path):
+    def load_file(path, tuple_decode):
         with open(path, "r", encoding="utf-8") as f:
-            return [TupleJSONLConverter.loads_line(line) for line in f]
+            if tuple_decode:
+                return [TupleJSONLConverter.loads(line) for line in f]
+            else:
+                return [json.loads(line) for line in f]
     
     @staticmethod
-    def loads_line(line):
+    def loads(line):
         return TupleEncoder.decode(json.loads(line))
     
     @staticmethod
@@ -119,10 +122,22 @@ def preprocess_audio(source, target_sr=16000, device=None):
 
     return waveform
 
-def load_and_process_parquet_dataset(repo_or_path, data_dir_pattern, audio_output_dir, key_col="key", is_local=False, tuple_decode=True):
+def load_and_process_parquet_dataset(
+    repo_or_path,
+    data_dir_pattern,
+    audio_output_dir,
+    key_col="key",
+    is_local=False,
+    tuple_decode=True,
+    extra_audio_keys: List[str]=None
+):
     """
-    Loading from huggingface parquet, decode audios to audio_output_dir
+    Load from parquet (local or remote), decode audios to audio_output_dir.
+    Supports multiple audio keys (e.g., for multi-turn dialog like user_audio1, bot_audio1, ...).
     """
+    if extra_audio_keys is None:
+        extra_audio_keys = ["user_audio1", "user_audio2", "user_audio3", "user_audio4"]
+    
     os.makedirs(audio_output_dir, exist_ok=True)
     if is_local:
         ds = load_dataset("parquet", data_files={"test": f"{repo_or_path}/{data_dir_pattern}/*.parquet"}, split="test")
@@ -132,21 +147,29 @@ def load_and_process_parquet_dataset(repo_or_path, data_dir_pattern, audio_outpu
     
     records = []
     for row in df.to_dict(orient="records"):
-        answer = row["answer"]
+        answer = row.get("answer", None)
         if isinstance(answer, str):
-            row["answer"] = json.loads(answer)
-        if tuple_decode:
-            row["answer"] = TupleEncoder.decode(row["answer"])
+            try:
+                answer = json.loads(answer)
+            except:
+                pass
+        if answer and tuple_decode:
+            answer = TupleEncoder.decode(answer)
+        row["answer"] = answer
 
-        audio = row["audio"]
-        audio_filename = audio.get("path") or f"{row[key_col]}.wav"
-        audio_path = os.path.abspath(os.path.join(audio_output_dir, audio_filename))
+        for audio_key in ["audio"] + extra_audio_keys:
+            audio = row.get(audio_key)
+            if not audio:
+                continue
 
-        if not os.path.exists(audio_path):
-            waveform = preprocess_audio(audio["bytes"])
-            torchaudio.save(audio_path, waveform, 16000, encoding="PCM_S", bits_per_sample=16)
+            audio_filename = f"{row[key_col]}.wav" if audio_key == "audio" else f"{row[key_col]}_{audio_key}.wav"  # for multi-audio
+            audio_path = os.path.abspath(os.path.join(audio_output_dir, audio_filename))
 
-        row["audio"] = audio_path
+            if not os.path.exists(audio_path):
+                waveform = preprocess_audio(audio["bytes"])
+                torchaudio.save(audio_path, waveform, 16000, encoding="PCM_S", bits_per_sample=16)
+
+            row[audio_key] = audio_path  # update to path
         records.append(row)
 
     return records

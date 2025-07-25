@@ -63,7 +63,7 @@ class BaseTask:
             for name in datasets:
                 loader = BatchLoader(
                     self._get_save_file("prediction", dataset_name=name),
-                    batch_size=int(self.kwargs.get("bsz", 1))
+                    batch_size=int(self.kwargs.get("bsz") or 1)
                 )
                 saver = BatchSaver(self._get_save_file("result", dataset_name=name, suffix=self.infer_task_cfg.eval_task))
                 summary_file = self._get_save_file("summary", dataset_name=name, suffix=self.infer_task_cfg.eval_task)
@@ -96,17 +96,20 @@ class BaseTask:
 class InferenceTask(BaseTask):
     def run(self):
         for dataset_ctx in self.dataset_infos:
-            with tqdm(total=len(dataset_ctx.loader), desc="Infer", unit="it") as pbar:
+            with tqdm(total=len(dataset_ctx.loader), desc="Infer", unit="it") as pbar:  # , disable=True
                 for batch_data in dataset_ctx.loader:
                     inputs = [self.template.load(**sample) for sample in batch_data]
-
+                    # inputs: [[{"role": "user", "content": {"audio": audio, "text": text} } ], * batchsize ]
+                    # multiturn-input: {"nrounds": "2", "dialogue": [{"role": "A", "round": "1", "content": [...]},{"role": "B", "round": "1", "content": [...]} ,...] }
                     keys = [data.get(dataset_ctx.loader.key_col, i) for i, data in enumerate(batch_data)]
-                    save_audio_dir = self.kwargs.get("save_audio_dir")
                     pred_args = {
-                        "pred_audio": [f"{save_audio_dir}/{key}_pred.wav" for key in keys]
-                    } if save_audio_dir else {}
-                    pred_args["reverse_spkr"] = self.infer_task_cfg.reverse_spkr
-                    pred_args["use_model_history"] = self.infer_task_cfg.use_model_history
+                        "reverse_spkr": self.infer_task_cfg.reverse_spkr,
+                        "use_model_history": self.infer_task_cfg.use_model_history,
+                        "save_latest_only": self.infer_task_cfg.save_latest_only,
+                    }
+                    save_audio_dir = self.kwargs.get("save_audio_dir")
+                    if save_audio_dir:
+                        pred_args["pred_audio"] = [f"{save_audio_dir}/{key}_pred.wav" for key in keys]
 
                     outputs = self.predictor.inference(inputs, **pred_args)
                     for key, data, output in zip(keys, batch_data, outputs):

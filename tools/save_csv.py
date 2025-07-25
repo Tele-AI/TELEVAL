@@ -39,7 +39,7 @@ def main():
                     line = f.readline().strip()
                     data = json.loads(line)
                     for key, value in data.items():
-                        score_str += value + " "
+                        score_str += str(value) + " "
                     results[model_name][dataset_name] = score_str
             except Exception as e:
                 print(f"fail to read {file_path}: {e}")

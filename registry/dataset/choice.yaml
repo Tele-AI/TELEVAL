@@ -1,7 +1,7 @@
 ceval-zh:
   class: src.dataset.BatchLoader
   args:
-    file: Tele-AI/TeleSpeech-AudioBench/ceval-zh
+    file: Tele-AI/TELEVAL/ceval-zh
     ref_col: answer
     query_col: query
     batch_size: 1
@@ -9,7 +9,7 @@ ceval-zh:
 agieval-zh:
   class: src.dataset.BatchLoader
   args:
-    file: Tele-AI/TeleSpeech-AudioBench/agieval-zh
+    file: Tele-AI/TELEVAL/agieval-zh
     ref_col: answer
     query_col: query
     batch_size: 1

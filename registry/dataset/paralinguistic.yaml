@@ -1,16 +1,24 @@
 esd:
   class: src.dataset.BatchLoader
   args:
-    file: Tele-AI/TeleSpeech-AudioBench/esd-zh
+    file: Tele-AI/TELEVAL/esd-zh
     ref_col: query_emo
     query_col: query
-    extra_col: ["query_emo_zh", "ref_answer", "ref_answer_emo", "ref_answer_emo_zh"]
+    extra_col: ["query_emo_zh", "answer", "answer_emo", "answer_emo_zh"]
     batch_size: 1
 
-aed_combine-zh:
+para_mix300-zh:
   class: src.dataset.BatchLoader
   args:
-    file: Tele-AI/TeleSpeech-AudioBench/aed_combine-zh
-    ref_col: answer
+    file: Tele-AI/TELEVAL/para_mix300-zh
     query_col: query
+    ref_col: answer
+    extra_col: ["para_name"]
 
+age-zh:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TELEVAL/age-zh
+    query_col: query
+    ref_col: age
+    extra_col: ["answer_age", "answer_common"]

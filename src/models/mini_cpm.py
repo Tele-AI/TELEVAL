@@ -94,12 +94,12 @@ class MiniCPMoAudio(Model):
     def generate_multiturn(self, audio, user_history, assistant_history, **kwargs):
         msgs = []
         if kwargs.get("pred_audio"):
-            ref_audio, _ = librosa.load("./src/minicpm_prompt/assistant_female_voice.wav", sr=16000, mono=True)
+            ref_audio, _ = librosa.load("./src/models/src_minicpm/ref_audios/assistant_female_voice.wav", sr=16000, mono=True)
             sys_prompt = self.model.get_sys_prompt(ref_audio=ref_audio, mode="audio_assistant", language="en")
             msgs.append(sys_prompt)
             generate_audio, output_audio_path = True, kwargs["pred_audio"]
         else:
-            ref_audio, _ = librosa.load("./src/minicpm_prompt/assistant_female_voice.wav", sr=16000, mono=True)
+            ref_audio, _ = librosa.load("./src/models/src_minicpm/ref_audios/assistant_female_voice.wav", sr=16000, mono=True)
             sys_prompt = self.model.get_sys_prompt(ref_audio=ref_audio, mode="audio_assistant", language="en")
             msgs.append(sys_prompt)
             

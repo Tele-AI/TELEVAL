@@ -8,7 +8,6 @@ from jinja2 import StrictUndefined, Template
 from jinja2.exceptions import UndefinedError
 from src.config import TemplateStruct
 
-
 @singledispatch
 def _load(t: Any, **kwargs: Any) -> Any:
     return t
@@ -16,9 +15,12 @@ def _load(t: Any, **kwargs: Any) -> Any:
 
 @_load.register
 def _(t: str, **kwargs: Any) -> str:
+    def getvar(name: str, default=None):  # for multiturn
+        return kwargs.get(name, default)
+    
     template = Template(t, undefined=StrictUndefined)
     try:
-        rendered = template.render(**kwargs)
+        rendered = template.render(**kwargs, getvar=getvar)
         # add for multiturn template
         try:
             return json.loads(rendered)

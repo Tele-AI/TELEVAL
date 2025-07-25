@@ -90,7 +90,7 @@ class GLM4voice(Model):
                 "num_beams": 1,
                 "temperature": 0,
                 "top_p": 1.0
-            },
+            },  # temperature can not set None !!!
             "default": {
                 "max_new_tokens": 2000,
                 "temperature": 0.2,
@@ -98,7 +98,7 @@ class GLM4voice(Model):
             }
         }
         self.generation_config = config.get(self.sample_params.get("gen_type", "greedy"), None)
-        logger.info("generation_config: {}".format(self.generation_config))
+        logger.info("generation_config: {}".format(self.generation_config)) 
 
     @torch.inference_mode()
     def _generate_stream(self, params):
@@ -228,7 +228,6 @@ class GLM4voice(Model):
         _, complete_text = self._generate(audio, save_pred_audio=save_pred_audio)
 
         return {"pred": complete_text, "pred_audio": kwargs.get("pred_audio")}
-
 
     def generate_multiturn(self, audio, user_history, assistant_history, **kwargs):
         save_pred_audio = kwargs.get("pred_audio")

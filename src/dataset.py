@@ -1,6 +1,7 @@
 import logging
 import os
 import shutil
+import json
 import pandas as pd
 import tempfile
 import atexit
@@ -13,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class BatchLoader:
     def __init__(self, file, key_col="key", ref_col=None, query_col=None, extra_col=None, 
-                 batch_size=1, limit=0, save_query_audio_dir=None):
+                 batch_size=1, start=0, limit=0, save_query_audio_dir=None, is_local=False, tuple_decode=True):
         self.file = file
         self.key_col = key_col
         self.ref_col = ref_col
@@ -24,15 +25,17 @@ class BatchLoader:
         self._temp_dir = None
 
         if os.path.isfile(file + ".jsonl") or (os.path.isfile(file) and file.endswith(".jsonl")):
-            records = self.load_jsonl(file)
+            records = self.load_jsonl(file, tuple_decode=tuple_decode)
         elif isinstance(file, str) and "/" in file:
-            print("Using dataset from HuggingFace")
-            records = self._process_parquet_records(file, save_query_audio_dir)
+            records = self._process_parquet_records(file, save_query_audio_dir, is_local=is_local)
         else:
             raise NotImplementedError(f"Unsupported file type: {file}")
 
         if limit > 0:
             records = records[:limit]
+        if start > 0:
+            records = records[start:]
+        
         self.df = pd.DataFrame(records)
 
     def __iter__(self):
@@ -49,11 +52,16 @@ class BatchLoader:
     def __len__(self):
         return len(self.df)
 
-    def _process_parquet_records(self, repo_data_dir, save_audio_root):
+    def _process_parquet_records(self, repo_data_dir, save_audio_root, is_local=False):
         if "/" not in repo_data_dir:
             raise ValueError(f"Invalid input format: {repo_data_dir}, expected 'repo_or_path/data_dir_pattern'")
-        parts = repo_data_dir.split("/", 2)
-        repo_or_path, data_dir_pattern = "/".join(parts[:2]), parts[-1]  # Tele-AI/TeleSpeech-AudioBench, noise-zh/bubble_-5dB-zh
+        if "noise-zh" in repo_data_dir:
+            # Tele-AI/TELEVAL, noise-zh/babble_-5dB-zh
+            parts = repo_data_dir.rsplit("/", 2)
+            repo_or_path, data_dir_pattern = parts[0], "/".join(parts[1:])
+        else:
+            # Tele-AI/TELEVAL, llamaqa-zh
+            repo_or_path, data_dir_pattern = repo_data_dir.rsplit("/", 1)
 
         if "*.parquet" in data_dir_pattern:
             base_subdir = os.path.normpath(os.path.dirname(data_dir_pattern))
@@ -68,9 +76,10 @@ class BatchLoader:
             atexit.register(self.cleanup)
             audio_output_dir = os.path.join(self._temp_dir, base_subdir)
             os.makedirs(audio_output_dir, exist_ok=True)
+        logger.info(f"using {audio_output_dir} to save query audio")
 
         return load_and_process_parquet_dataset(
-            repo_or_path, data_dir_pattern, audio_output_dir, key_col=self.key_col
+            repo_or_path, data_dir_pattern, audio_output_dir, key_col=self.key_col, is_local=is_local
         )
 
     def cleanup(self):
@@ -78,8 +87,8 @@ class BatchLoader:
             shutil.rmtree(self._temp_dir, ignore_errors=True)
 
     @staticmethod
-    def load_jsonl(file):
-        return TupleJSONLConverter.load(file)
+    def load_jsonl(file, tuple_decode):
+        return TupleJSONLConverter.load_file(file, tuple_decode)
 
 
 class BatchSaver:

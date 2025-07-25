@@ -94,9 +94,9 @@ class FreezeOmni(Model):
         self.generation_config = config.get(self.sample_params.get("gen_type", "greedy"), None)
         logger.info("generation_config: {}".format(self.generation_config))        
 
-    def _decoder(self, cur_hidden_state, pipeline, cur_text, tts, codec_chunk_size, codec_padding_size, decoder_topk, wav):
+    def decoder(self, cur_hidden_state, pipeline, cur_text, tts, codec_chunk_size, codec_padding_size, decoder_topk, wav):
         hidden_state_output = torch.cat(cur_hidden_state).squeeze(1)
-        cur_text_procced = self._post_process(cur_text)
+        cur_text_procced = self.post_process(cur_text)
         embeddings = pipeline.llm_decoder.model.embed_tokens(
                         torch.tensor(pipeline.tokenizer.encode(cur_text_procced)).cuda()
                         )
@@ -105,7 +105,7 @@ class FreezeOmni(Model):
                             codec_chunk_size, codec_padding_size):
             wav.append(seg)
 
-    def _post_process(self, text):
+    def post_process(self, text):
         """
         Post-processes the input text to standardize various characters and formatting.
 
@@ -147,7 +147,7 @@ class FreezeOmni(Model):
         
         return text
 
-    def _speech_dialogue(self, 
+    def speech_dialogue(self, 
                         audio: Tuple,
                         role: str=None, 
                         stat: str='sl', 
@@ -224,7 +224,7 @@ class FreezeOmni(Model):
         # Stage0: preprocess
         # set system role, stat will be set to 'sl'
         if past_key_value is None:
-            outputs = self._speech_dialogue(None, stat='pre', role=self.system_prompt.format(instruction))
+            outputs = self.speech_dialogue(None, stat='pre', role=self.system_prompt.format(instruction))
         else:
             outputs = dict(
                 past_key_values=past_key_value,
@@ -242,7 +242,7 @@ class FreezeOmni(Model):
         wav_input[:wav.shape[0]] = wav
         for i in range(0, wav_input.shape[0], chunk_size):
             fbank = self.audio_processor.process(wav_input[i:i + chunk_size])
-            outputs = self._speech_dialogue(fbank, **outputs)
+            outputs = self.speech_dialogue(fbank, **outputs)
             outputs['stat'] = 'cl'
         self.audio_processor.reset()
 
@@ -252,7 +252,7 @@ class FreezeOmni(Model):
         outputs['stat'] = 'ss'
 
         # Stage3: start speak
-        outputs = self._speech_dialogue(None, **outputs)
+        outputs = self.speech_dialogue(None, **outputs)
         cur_hidden_state = []
         cur_hidden_state.append(outputs['hidden_state'])
 
@@ -270,7 +270,7 @@ class FreezeOmni(Model):
                 break
             del outputs['text']
             del outputs['hidden_state']
-            outputs = self._speech_dialogue(None, **outputs)
+            outputs = self.speech_dialogue(None, **outputs)
             if outputs['stat'] == 'cs':
                 whole_text += outputs['text'][len(last_text):]
                 cur_hidden_state.append(outputs['hidden_state'])
@@ -283,7 +283,7 @@ class FreezeOmni(Model):
                             pass
                         else:
                             if len(cur_hidden_state) > 0:
-                                self._decoder(cur_hidden_state, self.model, cur_text, self.tts, 
+                                self.decoder(cur_hidden_state, self.model, cur_text, self.tts, 
                                             codec_chunk_size, codec_padding_size, decoder_topk, wav)
                                 cur_hidden_state = []
                             cur_text = ""
@@ -294,7 +294,7 @@ class FreezeOmni(Model):
 
         if output_audio_path is not None:
             if len(cur_hidden_state) != 0:
-                self._decoder(cur_hidden_state, self.model, cur_text, self.tts, 
+                self.decoder(cur_hidden_state, self.model, cur_text, self.tts, 
                             codec_chunk_size, codec_padding_size, decoder_topk, wav)
             sf.write(output_audio_path, torch.cat(wav, -1).squeeze().float().cpu().numpy(), 24000)
         outputs['stat'] = 'sl'

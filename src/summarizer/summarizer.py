@@ -61,7 +61,7 @@ class AvgThreshold(Summarizer):
 
         avg = sum(scores) / len(scores)
         above_threshold = sum(count for score, count in score_count.items() if score > self.threshold)
-        return {"score": "AVG: {:.2f}".format(avg), "above_threshold": above_threshold}
+        return {"score": "AVG: {:.2f}".format(avg), "above_threshold": "above{}: {}".format(self.threshold, above_threshold)}
 
 class AvgMOS(Summarizer):
     def statistic(self, scores: List[float], **kwargs):
