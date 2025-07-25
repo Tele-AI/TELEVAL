@@ -138,7 +138,7 @@ Dataset details and their corresponding evaluation abilities can be found in [as
 ## Results of Open-source Models
 Key results are shown in the table below:
 
-| **Model**                | **Basic Knowledge** | **Dialect Comprehension** | **Value Align** | **Chitchat** | **Dialect P&R** | **Emotion P&R** | **Age P&R** | **NSV P&R** | **Scene** | **Acoustic Robustness** | **CER** | **DNSMOS** | **Emo** |
+| **Model**                | **Basic Knowledge** (%) | **Dialect Comprehension** (%) | **Value Align** (%) | **Chitchat** (%) | **Dialect P&R** (%) | **Emotion P&R** (%) | **Age P&R** (%) | **NSV P&R** (%) | **Scene** (%) | **Acoustic Robustness** (%) | **CER (Speech)** (%) | **DNSMOS (Speech)** ↑ | **Emo (Speech)** (%) |
 |:------------------------:|:-------------------:|:-------------------------:|:---------------:|:------------:|:---------------:|:---------------:|:-----------:|:-----------:|:---------:|:-----------------------:|:-------:|:----------:|:--------:|
 | GLM-4-Voice              | 31.55               | 13.13                     | 92.55           | 59.50        | 4.57            | 35.55           | 27.81       | 1.89        | 2.28      | 32.88                   | 6.58    | 3.46       | 31.66    |
 | MiniCPM-o-2.6            | 36.16               | 16.67                     | 87.60           | 58.29        | 10.98           | 44.03           | 34.56       | 2.08        | 20.37     | 36.18                   | 2.58    | 3.52       | 34.26    |

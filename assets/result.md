@@ -86,7 +86,7 @@
 
 ### 7. Speech Ability
 
-| **Model**             | **CER** (%) | **DNSMOS** ↑ | **EMO** ↑ | **cantonese** | **henan_dialect** | **northeastern_mandarin** | **shanghainese** | **sichuanese** |
+| **Model**             | **CER** (%) | **DNSMOS** ↑ | **EMO** (%) | **cantonese** (%) | **henan_dialect** (%) | **northeastern_mandarin** (%) | **shanghainese** (%) | **sichuanese** (%) |
 |:---------------------:|:-------:|:----------:|:-------:|:-------------:|:-----------------:|:-------------------------:|:----------------:|:---------------:|
 | GLM-4-Voice           | 6.58    | 3.46       | 31.66   | 4.40          | 0.00              | 0.00                      | 0.48             | 0.00            |
 | MiniCPM-o 2.6         | 2.58    | 3.52       | 34.26   | 0.00          | 0.00              | 0.00                      | 0.00             | 0.00            |
@@ -102,7 +102,7 @@
 ### 8. Acoustic Robustness
 Detailed results are provided in [Report](https://arxiv.org/abs/2507.18061)
 
-| Model | babble_-5dB (%) | white_-5dB (%) | single_bg_spkr_-5dB (%) | multi_bg_spkrs_-5dB (%) | complex_env_-5dB (%) | complex_env_reverb_-5dB (%) | distortion_rate0.6 (%) | lowpass_filter_100Hz (%) | packet_loss_rate50 (%) | reverb_3000ms (%) | distance_5m (%) |
+| **Model** | **babble_-5dB** (%) | **white_-5dB** (%) | **single_bg_spkr_-5dB** (%) | **multi_bg_spkrs_-5dB** (%) | **complex_env_-5dB** (%) | **complex_env_reverb_-5dB** (%) | **distortion_rate0.6** (%) | **lowpass_filter_100Hz** (%) | **packet_loss_rate50** (%) | **reverb_3000ms** (%) | **d**istance_5m** (%) |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | GLM-4-Voice | 18.00  | 19.33  | 15.67  | 8.00  | 37.00  | 20.00  | 49.33  | 47.00  | 47.67  | 50.33  | 49.33  |
 | MiniCPM-o 2.6 | 12.00  | 24.00  | 15.67  | 11.67  | 38.33  | 23.33  | 54.33  | 54.67  | 52.67  | 55.33  | 56.00  |
