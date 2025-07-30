@@ -116,9 +116,12 @@ Model predictions and evaluation results are automatically saved in the followin
     └── results.csv
 ```
 
-## Supported Datasets and Tasks
+## Supported Tasks
 
 Currently supports 34 main datasets (98 sub-datasets). For full details, see [assets/task.md](assets/task.md).
+
+## Dataset Information
+Dataset details and their corresponding evaluation abilities can be found in [assets/dataset.md](assets/dataset.md#Dataset_Information).
 
 ## Supported SLMs
 | Model          | Link  |
@@ -131,9 +134,6 @@ Currently supports 34 main datasets (98 sub-datasets). For full details, see [as
 | freeze_omni | [Freeze-Omni](https://github.com/VITA-MLLM/Freeze-Omni) |
 | qwen2_5_omni | [Qwen2.5-Omni](https://github.com/QwenLM/Qwen2.5-Omni) |
 | kimi-audio-7b-instruct | [Kimi-Audio](https://github.com/MoonshotAI/Kimi-Audio) |
-
-## Dataset Information
-Dataset details and their corresponding evaluation abilities can be found in [assets/dataset.md](assets/dataset.md#Dataset_Information).
 
 ## Results of Open-source Models
 Key results are shown in the table below:
@@ -165,3 +165,14 @@ To add a new model, simply inherit the **`Model`** class and implement the **`ge
 * Parts of the code in this framework are referenced and adapted from [UltraEval-Audio](https://github.com/OpenBMB/UltraEval-Audio) and [OpenCompass](https://github.com/open-compass/opencompass).
 * The audio for datasets `llamaqa-en`, `triviaqa-en`, and `webq-en` comes from [https://huggingface.co/TwinkStart](https://huggingface.co/TwinkStart). We manually filtered these datasets to remove unsuitable QA samples and corrected the answers, so the total number of samples is smaller than the original datasets.
 * The inference implementations for each SLM are based on demo scripts from their respective open-source projects. We restructured them to integrate seamlessly into the TELEVAL framework. To ensure all models support *greedy_search* inference, we also adjusted some model codes, for example in `src_freezeomni/audioLLM.py`.
+
+## Citation
+If you find this project useful, a star ⭐ and citation would be greatly appreciated —— thank you for your support!
+```bibtex
+@article{li2025televal,
+  title={TELEVAL: A Dynamic Benchmark Designed for Spoken Language Models in Chinese Interactive Scenarios},
+  author={Zehan Li and Hongjie Chen and Yuxin Zhang and Jing Zhou and Xuening Wang and Hang Lv and Mengjie Du and Yaodong Song and Jie Lian and Jian Kang and Jie Li and Yongxiang Li and Zhongjiang He and Xuelong Li},
+  journal={arXiv preprint arXiv:2507.18061},
+  year={2025}
+}
+```
