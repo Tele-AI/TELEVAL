@@ -11,6 +11,7 @@
 
 <p align="center">
 🤗 <a href="https://huggingface.co/datasets/Tele-AI/TELEVAL" target="_blank">HuggingFace Dataset</a>️ • 
+🤖 <a href="https://modelscope.cn/datasets/TeleAI/TELEVAL/files" target="_blank">ModelScope</a> • 
 📃 <a href="https://arxiv.org/abs/2507.18061" target="_blank">Technical Report</a>
 </p>
 
@@ -47,7 +48,9 @@ pip install transformers==4.52.3  # required by qwen2.5-omni
 ## 运行示例
 
 ### Stage 0: 数据集准备 (可选)
-框架支持从huggingface读取parquet，以及读取本地jsonl文件两种方法。但由于网速的影响，以及部分数据集较大，我们建议在使用前先将数据集下载并保存为 jsonl + wav 的形式，方便反复调用。我们提供了一个 ```parquet2jsonl.py``` 工具可自动执行数据集的下载、格式转换
+框架支持从huggingface或本地读取parquet，以及读取本地jsonl文件两种方法。但由于网速的影响，以及部分数据集较大，我们建议先从huggingface或modelscope下载parquet数据集，方便反复调用。
+
+我们提供了一个 ```parquet2jsonl.py``` 工具可自动执行数据集的下载，并将数据集转为jsonl + wav格式
 ```bash
 # set $save_root_dir to the local directory for saving data
 python tools/parquet2jsonl.py

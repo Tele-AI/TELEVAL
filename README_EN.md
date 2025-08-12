@@ -11,6 +11,7 @@
 
 <p align="center">
 🤗 <a href="https://huggingface.co/datasets/Tele-AI/TeleSpeech-AudioBench" target="_blank">HuggingFace Dataset</a>️ • 
+🤖 <a href="https://modelscope.cn/datasets/TeleAI/TELEVAL/files" target="_blank">ModelScope</a> • 
 📃 <a href="https://arxiv.org/abs/2507.18061" target="_blank">Technical Report</a>
 </p>
 
@@ -49,7 +50,7 @@ pip install transformers==4.52.3  # required by qwen2.5-omni
 
 ### Stage 0: Dataset Preparation (Optional)
 
-The framework supports loading datasets from HuggingFace (Parquet format) or local JSONL files. Due to network limitations and large dataset sizes, we recommend downloading and converting datasets to `jsonl + wav` format beforehand for repeated use.  
+The framework supports loading datasets from HuggingFace and local (Parquet format) or local JSONL files. Due to network limitations and large dataset sizes, we recommend downloading and converting datasets to `jsonl + wav` format beforehand for repeated use.  
 
 A `parquet2jsonl.py` tool is provided to automate downloading and conversion.
 ```bash

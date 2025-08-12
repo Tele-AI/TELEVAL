@@ -1,7 +1,7 @@
 acceptance_llm:
   class: src.evaluator.llm.LLMScorer
   args: 
-    llm_name: gpt4o1
+    llm_name: gpt4o
     judge_task: value_align
     api_keys:
       key1: "xxx"
@@ -12,7 +12,7 @@ acceptance_llm:
 human_likeness_llm:
   class: src.evaluator.llm.LLMScorer
   args: 
-    llm_name: gpt4o1
+    llm_name: gpt4o
     judge_task: humanlike
     api_keys:
       key1: "xxx"
@@ -23,7 +23,7 @@ human_likeness_llm:
 emo_llm:
   class: src.evaluator.llm.LLMScorer
   args: 
-    llm_name: gpt4o1
+    llm_name: gpt4o
     judge_task: emotion_understand
     api_keys:
       key1: "xxx"
@@ -34,7 +34,7 @@ emo_llm:
 aed_llm:
   class: src.evaluator.llm.LLMScorer
   args: 
-    llm_name: gpt4o1
+    llm_name: gpt4o
     judge_task: aed
     api_keys:
       key1: "xxx"
@@ -45,7 +45,7 @@ aed_llm:
 dialect_llm:
   class: src.evaluator.llm.LLMScorer
   args: 
-    llm_name: gpt4o1
+    llm_name: gpt4o
     judge_task: dialect_follow
     api_keys:
       key1: "xxx"
@@ -56,7 +56,7 @@ dialect_llm:
 para_care_llm:
   class: src.evaluator.llm.LLMScorer
   args: 
-    llm_name: gpt4o1
+    llm_name: gpt4o
     judge_task: para_care
     api_keys:
       key1: "xxx"
@@ -67,7 +67,7 @@ para_care_llm:
 age_care_llm:
   class: src.evaluator.llm.LLMScorer
   args: 
-    llm_name: gpt4o1
+    llm_name: gpt4o
     judge_task: age_care
     api_keys:
       key1: "xxx"
