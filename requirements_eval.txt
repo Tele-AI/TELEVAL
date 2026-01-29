@@ -7,9 +7,10 @@ datasets
 soundfile
 librosa
 transformers
-WeTextProcessing==1.0.3
+WeTextProcessing
+json-repair
 #vllm  # (choice) for llm_offline judgement
-jiwer
+jiwer==4.0.0
 funasr
 zhon
 zhconv
@@ -17,5 +18,3 @@ onnxruntime==1.18.1  # (choice) for dialect classify and dnsmos
 torch
 torchaudio
 scipy
---find-links https://csukuangfj.github.io/kaldifeat/cuda.html
-kaldifeat==1.25.5  # (choice) for dialect classify

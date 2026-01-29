@@ -1,7 +1,16 @@
-esd:
+empathy_response_lexical-zh:
   class: src.dataset.BatchLoader
   args:
-    file: Tele-AI/TELEVAL/esd-zh
+    file: Tele-AI/TELEVAL/empathy_response_lexical-zh
+    ref_col: query_emo
+    query_col: query
+    extra_col: ["query_emo_zh", "answer", "answer_emo", "answer_emo_zh"]
+    batch_size: 1
+
+empathy_response_acoustic-zh:
+  class: src.dataset.BatchLoader
+  args:
+    file: Tele-AI/TELEVAL/empathy_response_acoustic-zh
     ref_col: query_emo
     query_col: query
     extra_col: ["query_emo_zh", "answer", "answer_emo", "answer_emo_zh"]

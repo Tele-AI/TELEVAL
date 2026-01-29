@@ -1,7 +1,7 @@
-aed-audio-instruct:
+scene:
   class: src.config.InferTaskCfg
   args:
-    dataset: aed_combine-zh
+    dataset: scene-zh
     template: zeroshot-aqa
     model: qwen2_5_omni
     eval_task: aed_instruct

@@ -7,14 +7,15 @@ import tempfile
 import atexit
 from tqdm import tqdm
 from typing import Dict, List
-from src.utils import load_and_process_parquet_dataset, TupleJSONLConverter, TupleEncoder
+from pathlib import Path
+from src.utils import load_and_process_parquet_dataset, parse_repo_and_pattern, TupleJSONLConverter, TupleEncoder
 tqdm.pandas()
 
 logger = logging.getLogger(__name__)
 
 class BatchLoader:
-    def __init__(self, file, key_col="key", ref_col=None, query_col=None, extra_col=None, 
-                 batch_size=1, start=0, limit=0, save_query_audio_dir=None, is_local=False, tuple_decode=True):
+    def __init__(self, file, key_col="key", do_infer=True, ref_col=None, query_col=None, extra_col=None, 
+                 batch_size=1, start=0, limit=0, save_query_audio_dir=None, tuple_decode=True):
         self.file = file
         self.key_col = key_col
         self.ref_col = ref_col
@@ -24,10 +25,11 @@ class BatchLoader:
         self.index = 0
         self._temp_dir = None
 
-        if os.path.isfile(file + ".jsonl") or (os.path.isfile(file) and file.endswith(".jsonl")):
+        file = Path(file)
+        if file.is_file() and file.suffix == ".jsonl":
             records = self.load_jsonl(file, tuple_decode=tuple_decode)
-        elif isinstance(file, str) and "/" in file:
-            records = self._process_parquet_records(file, save_query_audio_dir, is_local=is_local)
+        elif do_infer and isinstance(file, (str, Path)) and "/" in str(file):
+            records = self._process_parquet_records(str(file), save_query_audio_dir)
         else:
             raise NotImplementedError(f"Unsupported file type: {file}")
 
@@ -52,21 +54,12 @@ class BatchLoader:
     def __len__(self):
         return len(self.df)
 
-    def _process_parquet_records(self, repo_data_dir, save_audio_root, is_local=False):
-        if "/" not in repo_data_dir:
-            raise ValueError(f"Invalid input format: {repo_data_dir}, expected 'repo_or_path/data_dir_pattern'")
-        if "noise-zh" in repo_data_dir:
-            # Tele-AI/TELEVAL, noise-zh/babble_-5dB-zh
-            parts = repo_data_dir.rsplit("/", 2)
-            repo_or_path, data_dir_pattern = parts[0], "/".join(parts[1:])
-        else:
-            # Tele-AI/TELEVAL, llamaqa-zh
-            repo_or_path, data_dir_pattern = repo_data_dir.rsplit("/", 1)
+    def _process_parquet_records(self, repo_data_dir, save_audio_root):
+        info = parse_repo_and_pattern(repo_data_dir)
 
-        if "*.parquet" in data_dir_pattern:
-            base_subdir = os.path.normpath(os.path.dirname(data_dir_pattern))
-        else:
-            base_subdir = os.path.normpath(data_dir_pattern)
+        repo_or_path, pattern = info["repo"], info["pattern"]
+        is_local = info["type"] == "local"
+        base_subdir = os.path.basename(os.path.normpath(pattern))
 
         if save_audio_root:
             audio_output_dir = os.path.join(save_audio_root, base_subdir)
@@ -79,7 +72,7 @@ class BatchLoader:
         logger.info(f"using {audio_output_dir} to save query audio")
 
         return load_and_process_parquet_dataset(
-            repo_or_path, data_dir_pattern, audio_output_dir, key_col=self.key_col, is_local=is_local
+            repo_or_path, pattern, audio_output_dir, key_col=self.key_col, is_local=is_local
         )
 
     def cleanup(self):
@@ -89,6 +82,18 @@ class BatchLoader:
     @staticmethod
     def load_jsonl(file, tuple_decode):
         return TupleJSONLConverter.load_file(file, tuple_decode)
+
+    @staticmethod
+    def load_json(file):
+        with open(file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        if isinstance(data, list):
+            return data
+        elif isinstance(data, dict):
+            return [data]
+        else:
+            raise ValueError(f"Unsupported JSON structure in {file}")
 
 
 class BatchSaver:

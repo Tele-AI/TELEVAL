@@ -51,7 +51,9 @@ class BaseTask:
                 self.dataset_infos.append(DatasetRuntimeCtx(name, loader, saver))
 
         elif mode == "eval":
-            eval_task_cfg = registry.get_eval_task(self.kwargs.get("eval_task") or self.infer_task_cfg.eval_task)
+            eval_task_cfg = registry.get_eval_task(
+                self.kwargs.get("eval_task") or self.infer_task_cfg.eval_task
+            )
             datasets = self.infer_task_cfg.dataset
             if not isinstance(datasets, list):
                 datasets = [datasets]
@@ -63,11 +65,24 @@ class BaseTask:
             for name in datasets:
                 loader = BatchLoader(
                     self._get_save_file("prediction", dataset_name=name),
-                    batch_size=int(self.kwargs.get("bsz") or 1)
+                    batch_size=int(self.kwargs.get("bsz") or eval_task_cfg.batch_size or 1),
+                    do_infer=False
                 )
-                saver = BatchSaver(self._get_save_file("result", dataset_name=name, suffix=self.infer_task_cfg.eval_task))
-                summary_file = self._get_save_file("summary", dataset_name=name, suffix=self.infer_task_cfg.eval_task)
-                self.dataset_infos.append(DatasetRuntimeCtx(name, loader, saver, summary_file))
+                saver = BatchSaver(
+                    self._get_save_file(
+                        "result", 
+                        dataset_name=name, 
+                        suffix=self.kwargs.get("eval_task") or self.infer_task_cfg.eval_task
+                    )
+                )
+                summary_file = self._get_save_file(
+                    "summary", 
+                    dataset_name=name, 
+                    suffix=self.kwargs.get("eval_task") or self.infer_task_cfg.eval_task
+                )
+                self.dataset_infos.append(
+                    DatasetRuntimeCtx(name, loader, saver, summary_file)
+                )
 
     def _get_save_file(self, stage, dataset_name=None, suffix=None):
         dataset_name = dataset_name or self.infer_task_cfg.dataset
@@ -146,7 +161,7 @@ class EvalTask(BaseTask):
             scores = []
             for batch_data in dataset_ctx.loader:
                 # sinlge_data: {"key":xxx, "pred":xxx, "ref":xxx, "query":xxx, ...}
-                keys, preds, refs, pred_info_list = [
+                keys, preds, refs, meta_info_list = [
                     list(x) for x in zip(*[
                         (
                             d["key"],
@@ -158,13 +173,13 @@ class EvalTask(BaseTask):
                     ])
                 ]
 
-                eval_results = self.evaluator.evaluate(preds, refs, pred_info_list)
-                if len(eval_results) != len(pred_info_list):
+                eval_results = self.evaluator.evaluate(preds, refs, meta_info_list)
+                if len(eval_results) != len(meta_info_list):
                     raise ValueError("Lost some results...")
                 
-                for result, pred_info in zip(eval_results, pred_info_list):
-                    if self.kwargs.get("keep_pred_info", True):
-                        result.update(pred_info)
+                for result, meta_info in zip(eval_results, meta_info_list):
+                    if self.kwargs.get("keep_meta_info", True):
+                        result.update(meta_info)
 
                     scores.append(result["score"])
                     dataset_ctx.saver.save_one(result)

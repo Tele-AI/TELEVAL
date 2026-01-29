@@ -51,13 +51,14 @@ your_eval_task_name:
 dataset-name:
   class: src.dataset.BatchLoader
   args:
-    file: path/to/huggingface  # or path/to/*.jsonl
+    file: path/to/huggingface  # or path/to/*.jsonl or path/to/dataset
     ref_col: answer  # the reference answer column name in file
     query_col: query  # question col for logger
     batch_size: 1
     # key_col: key  # Prepared for private data, this parameter allows you to set the key_col. The default is "key".
     # extra_col: ["xxx", "xxx"]  # List-type
     # save_query_audio_dir: test_data/audios  # if set, will decode and save test wav when generating from huggingface. This setting is not required for JSONL data.
+    # is_local: True  # if True, will use the parquet in your local path (defined in 'file')
 ```
 
 ### How to Define a Custom ```model```

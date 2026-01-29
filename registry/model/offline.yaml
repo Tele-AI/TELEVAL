@@ -1,3 +1,36 @@
+mimo-audio:
+  class: src.models.mimo_audio.MiMoAudio
+  args:
+    model_path: path/to/MiMo-Audio-7B-Instruct
+    mimo_audio_tokenizer_path: path/to/MiMo-Audio-Tokenizer
+    sample_params:
+      gen_type: greedy
+      think: False
+
+qwen3_omni:
+  class: src.models.qwen3_omni.Qwen3Omni
+  args:
+    path: path/to/Qwen3-Omni-30B-A3B-Instruct
+    sample_params:
+      gen_type: greedy
+
+stepaudio2-mini:
+  class: src.models.stepaudio2.StepAudio2
+  args:
+    path: path/to/Step-Audio-2-mini
+    token2wav_path: path/to/Step-Audio-2-mini/token2wav
+    sample_params:
+      gen_type: greedy
+
+llama_omni2:
+  class: src.models.llama_omni2.LlamaOmni2
+  args:
+    path: path/to/llama-omni2-7b-bilingual
+    encoder_path: path/to/whisper-large-v3/large-v3.pt
+    vocoder_path: path/to/llama-omni2-vocoder/cosy2_decoder
+    sample_params:
+      gen_type: greedy
+
 kimi-audio-7b-instruct:
   class: src.models.kimi_audio.Kimi
   args:

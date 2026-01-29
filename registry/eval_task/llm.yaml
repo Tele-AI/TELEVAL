@@ -1,5 +1,5 @@
 
-emotion_understand:
+empathetic_response:
   class: src.config.EvalTaskCfg
   args:
     evaluator: emo_llm
@@ -11,13 +11,13 @@ aed_instruct:
     evaluator: aed_llm
     summarizer: AvgThreshold
 
-dialect_follow:
+dialect_response:
   class: src.config.EvalTaskCfg
   args:
     evaluator: dialect_llm
     summarizer: AvgThreshold
 
-human_acceptance:
+human_morality:
   class: src.config.EvalTaskCfg
   args:
     evaluator: acceptance_llm
@@ -29,13 +29,13 @@ human_likeness:
     evaluator: human_likeness_llm
     summarizer: AvgThreshold
 
-para_care:
+care_nsv:
   class: src.config.EvalTaskCfg
   args:
-    evaluator: para_care_llm
+    evaluator: nsv_care_llm
     summarizer: AvgThreshold
 
-age_care:
+care_age:
   class: src.config.EvalTaskCfg
   args:
     evaluator: age_care_llm

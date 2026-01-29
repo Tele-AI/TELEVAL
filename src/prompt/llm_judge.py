@@ -14,7 +14,7 @@ TASK_PROMPT_MAP = {
     "value_align": lambda pred, ref, **kwargs: PROMPT_VALUE_ALIGN.format(
         query=kwargs["query"], prediction=pred
     ),
-    "para_care": lambda pred, ref, **kwargs: PROMPT_CARE.format(
+    "nsv_care": lambda pred, ref, **kwargs: PROMPT_CARE.format(
         query=kwargs["query"], para_name=["para_name"], prediction=pred
     ),
     "age_care": lambda pred, ref, **kwargs: PROMPT_AGE_CARE.format(

@@ -1,8 +1,8 @@
-wer: 
+modal_consistency:
   class: src.config.EvalTaskCfg
   args:
     evaluator: paraformer-zh
-    summarizer: AvgWER
+    summarizer: AvgConsistency
 
 dnsmos:
   class: src.config.EvalTaskCfg
@@ -10,14 +10,14 @@ dnsmos:
     evaluator: MS-DNSMOS
     summarizer: AvgMOS
 
-emotion_response:
+empathetic_response_audio:
   class: src.config.EvalTaskCfg
   args:
     evaluator: emo2vec-large
-    summarizer: AvgInfo
+    summarizer: Avg
 
-dialect_classify:
+dialect_response_audio:
   class: src.config.EvalTaskCfg
   args:
     evaluator: TeleSpeech-Dialect
-    summarizer: AvgInfo
+    summarizer: Avg

@@ -21,40 +21,58 @@
 
 ## Introduction
 
-**TELEVAL** is a dynamic evaluation benchmark designed for Spoken-Language Models (SLMs), focusing on Chinese interactive scenarios. It covers three main dimensions: **Explicit Semantics**, **Paralinguistic & Implicit Semantics**, and **System Abilities**, with tasks ranging from basic knowledge to dialect understanding and paralinguistic response.
+**TELEVAL** is an evaluation benchmark for spoken-language models (SLMs) that decomposes spoken interaction ability into three levels:
+- **Perceptual Robustness**: the ability to reliably capture and process user speech signals;
+- **Explicit Semantic Reasoning**: the ability to correctly understand user intent and generate semantically accurate and factually grounded responses;
+- **Social-Pragmatic Alignment**: the ability to behave in ways consistent with human conversational norms and to adjust response strategies based on implicit interactional cues.
+
+Beyond assessing whether a model correctly fulfills user intent (Reliable Content Fulfillment) and produces high-quality outputs, TELEVAL places strong emphasis on Interactional Appropriateness. In particular, it evaluates whether models can generate spoken, non-templated responses and implicitly leverage paralinguistic information in speech, such as emotional states, age-related cues, and other non-verbal signals, to guide interactional decisions. Rather than testing a model’s ability to perform explicit classification or label prediction of acoustic attributes under predefined system prompts, TELEVAL directly evaluates whether such paralinguistic information is implicitly perceived and appropriately reflected in the model’s natural conversational responses.
 
 - **Multi-dimensional Evaluation 🧠**: Covers 12 tasks across 34 datasets, with more continuously added.
-- **Real-world Interaction Testing 🎧**: Designed around natural, realistic dialogue needs (e.g., knowledge Q&A, human-like companionship), avoiding artificial prompts like “I'm a child, what should I...” or “What mood am I in?”.
+- **Real-world Interaction Testing 🎧**: Designed around practical spoken interaction needs, such as question answering and companion-style dialogue. The benchmark avoids artificial or information-leaking prompts (e.g., “I am a child, what should I do…” or “What emotion am I feeling?”), and focuses on natural conversational behavior.
 - **Multilingual & Dialect-rich Data 🌏**: Primarily based on Mandarin Chinese, with additional coverage of English Q&A and multiple Chinese dialects (e.g., Cantonese, Henan, Northeastern, Shanghainese, Sichuanese).
-- **Modular Evaluation Framework 🔧**: A full inference and evaluation framework with a decoupled design. Supports evaluating existing inference results and customizing models, tasks, and datasets. Works for both SLMs and LLMs.
+- **Modular Evaluation Framework 🔧**: Provides a complete pipeline for model inference and result evaluation, with decoupled inference and scoring stages, enabling reuse of existing model outputs and easy customization of models, tasks, and datasets.
+
+## Supported SLMs and Leaderboard
+| Rank | Model | Average Score (%)  |
+|:--:|:-----:|:-------:|
+| 🥇 | [Qwen3-Omni](https://github.com/QwenLM/Qwen3-Omni) | 53.46 |
+| 🥈 | [StepAudio2-mini](https://github.com/stepfun-ai/Step-Audio2) | 46.64 |
+| 🥉 | [Mimo-Audio-Instruct](https://github.com/XiaomiMiMo/MiMo-Audio) | 46.10 |
+| #4 | GPT4o-Audio (2024-12-17 preview) | 45.46 |
+| #5 | [Qwen2.5-Omni](https://github.com/QwenLM/Qwen2.5-Omni) | 42.51 |
+| #6 | [Kimi-Audio](https://github.com/MoonshotAI/Kimi-Audio) | 38.82 |
+| #7 | [MiniCPM-o-2.6](https://github.com/OpenBMB/MiniCPM-o) | 37.40 |
+| #8 | [Baichuan-Omni-1.5](https://github.com/baichuan-inc/Baichuan-Omni-1.5) | 36.90 |
+| #9 | [Freeze-Omni](https://github.com/VITA-MLLM/Freeze-Omni) | 33.19 |
+| #10 | [GLM-4-Voice](https://github.com/THUDM/GLM-4-Voice) | 31.87 |
+| #11 | [LLaMA-Omni2](https://github.com/ictnlp/LLaMA-Omni2) | 24.67 |
+| #12 | [SpeechGPT-2.0-preview](https://github.com/OpenMOSS/SpeechGPT-2.0-preview) | 14.49 |
 
 ## Environment
 ```bash
-python3.10 -m venv televal-env
+python -m venv televal-env
 source televal-env/bin/activate
-
-# Install dependencies for inference & evaluation
-pip install -r requirements_all.txt
 
 # evaluation only
 pip install -r requirements_eval.txt
+
+# Install dependencies for inference & evaluation
+pip install -r requirements_all.txt
 ```
 
 We provide a unified environment in `requirements_all.txt` that includes dependencies for all supported models.  
-However, `qwen2.5-omni` and `kimi-audio` require a higher version of `transformers`. For these models, we suggest using
-```bash
-pip install transformers==4.52.3  # required by qwen2.5-omni
-```
+However, some models like `qwen2.5-omni` and `kimi-audio` require a higher version of `transformers`. For these models, it is recommended to install the corresponding version of `transformers` separately, as specified in `requirements_all.txt`.
 
 ## Usage
 
 ### Stage 0: Dataset Preparation (Optional)
 
-The framework supports loading datasets from HuggingFace and local (Parquet format) or local JSONL files. Due to network limitations and large dataset sizes, we recommend downloading and converting datasets to `jsonl + wav` format beforehand for repeated use.  
+The framework supports loading datasets from HuggingFace and local (Parquet format) or local JSONL files. Due to network limitations and large dataset sizes, we strongly recommend downloading and converting datasets to `jsonl + wav` format beforehand for repeated use.  
 
-A `parquet2jsonl.py` tool is provided to automate downloading and conversion.
+The ```parquet2jsonl.py``` provides multiple usage combinations that can automatically handle dataset downloading and preprocessing, converting datasets into JSONL and WAV formats for easier use.
 ```bash
-# set $save_root_dir to the local directory for saving data
+# set $save_root_dir and choose a usage mode, then running:
 python tools/parquet2jsonl.py
 ```
 
@@ -67,35 +85,16 @@ Download the model you want to use for inference and set its path in `registry/m
 Tasks are configured via YAML files under `registry/infer_task`. Once the corresponding `*.yaml` file is ready, you can quickly run:
 ```bash
 export PYTHONPATH=$PWD:$PYTHONPATH
-python main.py --mode "infer" --task "aqa"
+python main.py --mode "infer" --task "aqa-llamaqa-zh"
 ```
 
-The framework also supports **global argument settings** to avoid repeatedly editing config files. You can run:
+(**Strongly recommended**) You can also use the ```run.sh``` script to perform automatic inference across multiple tasks and models. Simply modify the parameters in ```run.sh``` and run:
 ```bash
-export PYTHONPATH=$PWD:$PYTHONPATH
-infer_task="aqa-llamaqa-zh" # infer tasks defined in registry/infer_task
-save_dir="xxx/res"               # prediction and evaluation result saving root dir
-save_pred_audio=False        # if True, will save prediction audio
-model="freeze_omni"          # model name defined in registry/model
-python main.py --mode "infer" --task $infer_task --save_dir $save_dir --save_pred_audio $save_pred_audio --model $model
-```
-
-We provide a `run.sh` script for **automatic inference across multiple tasks and models**. Modify the parameters in `run.sh` and run:
-```bash
-bash run.sh
+bash run.sh  # stage=1
 ```
 
 ### Stage 2: Evaluation
-If inference results already exist, you can run the following script to get scores for a given eval_task:
-```bash
-export PYTHONPATH=$PWD:$PYTHONPATH
-infer_task="aqa-llamaqa-zh"   # infer tasks defined in registry/infer_task
-save_dir="xxx/res"           # prediction and evaluation result saving root dir, sub-dir can be used
-save_pred_audio=False         # if True, will save prediction audio
-model="freeze_omni"           # model name defined in registry/model
-python main.py --mode "eval" --task $infer_task --save_dir $save_dir --model $model
-```
-
+If inference results already exist, you can run the following script to get scores for a given eval_task.
 **You can also run scoring directly via ```run.sh``` for a one-stop evaluation.**
 
 The framework also supports evaluating external results (without running Stage 1). Just ensure the model predictions are saved at ```${save_dir}/prediction/${model}/${infer_task}.jsonl```. Each line in the JSONL file must include at least the fields: ```key, pred, ref``` (custom fields are also supported). Then run the same evaluation script as above.
@@ -124,34 +123,25 @@ Currently supports 34 main datasets (98 sub-datasets). For full details, see [as
 ## Dataset Information
 Dataset details and their corresponding evaluation abilities can be found in [assets/dataset.md](assets/dataset.md#Dataset_Information).
 
-## Supported SLMs
-| Model          | Link  |
-|:-------------:|:-------:|
-| glm-4-voice-9b | [GLM-4-Voice](https://github.com/THUDM/GLM-4-Voice) |
-| MiniCPMo2_6-audio | [MiniCPM-o-2.6](https://github.com/OpenBMB/MiniCPM-o) |
-| baichuan_omni_1d5 | [Baichuan-Omni-1.5](https://github.com/baichuan-inc/Baichuan-Omni-1.5) |
-| llama_omni | [LLaMA-Omni](https://github.com/ictnlp/LLaMA-Omni) |
-| speechgpt2 | [SpeechGPT-2.0-preview](https://github.com/OpenMOSS/SpeechGPT-2.0-preview) |
-| freeze_omni | [Freeze-Omni](https://github.com/VITA-MLLM/Freeze-Omni) |
-| qwen2_5_omni | [Qwen2.5-Omni](https://github.com/QwenLM/Qwen2.5-Omni) |
-| kimi-audio-7b-instruct | [Kimi-Audio](https://github.com/MoonshotAI/Kimi-Audio) |
-
 ## Results of Open-source Models
 Key results are shown in the table below:
 
-| **Model**                | **Basic Knowledge** (%) | **Dialect Comprehension** (%) | **Value Align** (%) | **Chitchat** (%) | **Dialect P&R** (%) | **Emotion P&R** (%) | **Age P&R** (%) | **NSV P&R** (%) | **Scene** (%) | **Acoustic Robustness** (%) | **CER (Speech)** (%) | **DNSMOS (Speech)** ↑ | **Emo (Speech)** (%) |
-|:------------------------:|:-------------------:|:-------------------------:|:---------------:|:------------:|:---------------:|:---------------:|:-----------:|:-----------:|:---------:|:-----------------------:|:-------:|:----------:|:--------:|
-| GLM-4-Voice              | 31.55               | 13.13                     | 92.55           | 59.50        | 4.57            | 35.55           | 27.81       | 1.89        | 2.28      | 32.88                   | 6.58    | 3.46       | 31.66    |
-| MiniCPM-o-2.6            | 36.16               | 16.67                     | 87.60           | 58.29        | 10.98           | 44.03           | 34.56       | 2.08        | 20.37     | 36.18                   | 2.58    | 3.52       | 34.26    |
-| Baichuan-Omni-1.5        | 34.84               | 30.68                     | 95.00           | 26.26        | 7.38            | 13.55           | 12.24       | 1.80        | 3.37      | 42.97                   | 7.89    | 3.40       | 24.74    |
-| LLaMA-Omni               | 14.63               | 0.00                      | 49.16           | 9.21         | 0.27            | 8.32            | 3.63        | 0.77        | 0.19      | 12.27                   | 8.33    | 3.21       | 37.28    |
-| SpeechGPT-2.0-preview    | 9.88                | 4.98                      | 76.41           | 41.22        | 5.17            | 22.59           | 23.63       | 1.52        | 0.52      | 10.70                   | 17.27   | 2.46       | 27.48    |
-| Freeze-Omni              | 33.05               | 16.44                     | 87.57           | 30.90        | 5.72            | 20.72           | 13.68       | 1.85        | 17.75     | 30.48                   | 4.88    | 3.49       | 41.05    |
-| Qwen2.5-Omni             | 34.77               | 40.54                     | 82.93           | 80.89        | 18.91           | 44.83           | 42.51       | 2.19        | 32.70     | 42.79                   | 1.69    | 3.47       | 52.59    |
-| Kimi-Audio               | 37.18               | 25.71                     | 86.67           | 47.95        | 10.18           | 53.17           | 22.77       | 9.19        | 37.11     | 45.30                   | 3.84    | 3.38       | 45.48    |
-| GPT4o-Audio (2024-12-17 preview) | 52.93               | 21.15                     | 96.29           | 34.45        | 9.19            | 35.28           | 17.65       | 2.52        | 14.93     | 38.79                   | 1.94    | 3.46       | 24.09    |
+| **Model**                 | **Basic Knowledge** (%) | **Dialect Comprehension** (%) | **Safety&Morality** (%) | **Humanlike Chitchat** (%) | **Livelihood Policy** (%) | **Multiturn Dialogue** (%) | **Dialect-Aware Response** (%) | **Empathetic Response** (%) | **Age-Aware Response** (%) | **NSV-Aware Response** (%) | **Scene** (%) | **Acoustic Robustness** (%) | **Speech-Text Consistency** (%) | **Response Quality (Speech)** (⬆) | **Empathetic Response (Speech)** (%) |
+|---------------------------|---------------------|---------------------------|-----------------------|------------------------|-----------------------|------------------------|----------------------------|-------------------------|------------------------|------------------------|-----------|-------------------------|-----------------------------|-------------------------------|-----------------------------------|
+| **GPT4o-Audio (API)**     | 52.93               | 21.15                     | 96.29                 | 34.45                  | 16.39                 | 84.00                  | 9.19                       | 35.28                   | 17.65                  | 2.52                   | 8.01      | 38.79                   | 98.06                       | 3.46                          | 24.09                             |
+| **GLM-4-Voice**           | 31.55               | 13.13                     | 92.55                 | 59.50                  | 16.84                 | 80.00                  | 4.57                       | 35.55                   | 27.81                  | 1.89                   | 0.75      | 32.88                   | 94.45                       | 3.38                          | 34.32                             |
+| **MiniCPM-o-2.6**         | 36.16               | 16.67                     | 87.60                 | 58.29                  | 19.78                 | 86.67                  | 10.98                      | 44.03                   | 34.56                  | 2.08                   | 8.91      | 36.18                   | 95.74                       | 3.48                          | 27.90                             |
+| **Baichuan-Omni-1.5**     | 34.84               | 30.68                     | 95.00                 | 26.26                  | 19.91                 | 78.67                  | 7.38                       | 13.55                   | 12.24                  | 1.80                   | 1.48      | 42.97                   | 91.31                       | 3.40                          | 23.66                             |
+| **LLaMA-Omni2**           | 24.89               | 7.79                      | 77.97                 | 20.77                  | 14.27                 | 54.00                  | 4.26                       | 21.12                   | 13.12                  | 1.77                   | 0.56      | 28.24                   | 98.22                       | 3.49                          | 26.21                             |
+| **SpeechGPT-2.0-preview** | 9.88                | 4.98                      | 76.41                 | 41.22                  | 10.38                 | 20.00                  | 5.17                       | 22.59                   | 23.63                  | 1.52                   | 0.27      | 10.70                   | 83.34                       | 2.45                          | 27.78                             |
+| **Freeze-Omni**           | 33.05               | 16.44                     | 87.57                 | 30.90                  | 16.64                 | 62.67                  | 5.72                       | 20.72                   | 13.68                  | 1.85                   | 9.15      | 30.48                   | 98.14                       | 3.48                          | 38.87                             |
+| **Qwen2.5-Omni**          | 34.77               | 40.54                     | 82.93                 | 80.89                  | 17.89                 | 88.67                  | 18.91                      | 44.83                   | 42.51                  | 2.19                   | 18.90     | 42.79                   | 98.83                       | 3.46                          | 51.71                             |
+| **Kimi-Audio**            | 37.18               | 25.71                     | 86.67                 | 47.95                  | 13.45                 | 84.87                  | 10.18                      | 53.17                   | 22.77                  | 9.19                   | 22.01     | 45.30                   | 96.73                       | 3.40                          | 46.25                             |
+| **StepAudio2-mini**       | 38.96               | 45.45                     | 91.93                 | 29.25                  | 23.18                 | 82.67                  | 40.12                      | 16.43                   | 18.77                  | 1.97                   | 16.42     | 42.79                   | 94.31                       | 3.22                          | 38.60                             |
+| **Qwen3-Omni**            | 50.52               | 41.52                     | 90.11                 | 73.45                  | 22.31                 | 92.67                  | 32.82                      | 44.03                   | 26.43                  | 2.52                   | 18.53     | 50.24                   | 97.86                       | 3.48                          | 48.26                             |
+| **Mimo-Audio-Instruct**   | 46.11               | 36.57                     | 99.36                 | 29.27                  | 19.89                 | 88.00                  | 23.74                      | 16.43                   | 11.55                  | 1.87                   | 15.04     | 56.97                   | 31.61                       | 1.80                          | 26.69                             |
 
-* Basic Knowledge, Dialect Comprehension, and Dialect P&R are weighted averages across multiple datasets. Acoustic Robustness is the average of the worst-case performance under each acoustic condition.  
+* Basic Knowledge, Dialect Comprehension, and Dialect-Aware Response are weighted averages across multiple datasets. Acoustic Robustness is the average of the worst-case performance under each acoustic condition.  
 * Since most open-source models do not support "dialect audio generation without explicit instructions," this part is excluded from the table.
 * Results by dimension can be found in [assets/result.md](assets/result.md#results).  
   For more experiments and analysis, see <a href="https://arxiv.org/abs/2507.18061" target="_blank">Technical Report</a>.
@@ -172,7 +162,7 @@ If you find this project useful, a star ⭐ and citation would be greatly apprec
 ```bibtex
 @article{li2025televal,
   title={TELEVAL: A Dynamic Benchmark Designed for Spoken Language Models in Chinese Interactive Scenarios},
-  author={Zehan Li and Hongjie Chen and Yuxin Zhang and Jing Zhou and Xuening Wang and Hang Lv and Mengjie Du and Yaodong Song and Jie Lian and Jian Kang and Jie Li and Yongxiang Li and Zhongjiang He and Xuelong Li},
+  author={Zehan Li and Hongjie Chen and Qing Wang and Yuxin Zhang and Jing Zhou and Hang Lv and Mengjie Du and Yaodong Song and Jie Lian and Jian Kang and Jie Li and Yongxiang Li and Xuelong Li},
   journal={arXiv preprint arXiv:2507.18061},
   year={2025}
 }

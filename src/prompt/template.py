@@ -1,7 +1,8 @@
 """
-from https://github.com/OpenBMB/UltraEval-Audio/blob/main/src/prompt/base.py
+Modified from https://github.com/OpenBMB/UltraEval-Audio/blob/main/src/prompt/base.py
 """
 import json
+import math
 from functools import singledispatch
 from typing import Any, Dict, List
 from jinja2 import StrictUndefined, Template
@@ -18,9 +19,16 @@ def _(t: str, **kwargs: Any) -> str:
     def getvar(name: str, default=None):  # for multiturn
         return kwargs.get(name, default)
     
+    def safe_getvar(key):
+        """ensure return Python type, transpose NaN to None"""
+        val = getvar(key)
+        if isinstance(val, float) and math.isnan(val):
+            return None
+        return val    
+    
     template = Template(t, undefined=StrictUndefined)
     try:
-        rendered = template.render(**kwargs, getvar=getvar)
+        rendered = template.render(**kwargs, getvar=safe_getvar)
         # add for multiturn template
         try:
             return json.loads(rendered)

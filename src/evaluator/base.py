@@ -1,6 +1,6 @@
 from typing import Dict, Any, Union, List
 from src.evaluator.process import SimpleTokenizer, OptionExtractor
-from src.config import RefType, RefsType
+from src.config import RefsType
 from src.utils import parallel_batch
 
 class Evaluator:
@@ -20,6 +20,8 @@ class ExistMatch(Evaluator):
     @parallel_batch(default_workers=4)
     def evaluate(self, pred: str, ref: RefsType, pred_info: Dict, **kwargs):
         # NOTE (TTTdas): If strict sequential matching is required, set keep_punc=False and simply put the ref into a string
+        if isinstance(ref, str):
+            ref = [ref]
         if not isinstance(ref, List):
             raise ValueError(f"Need List type ref for ExistMatch, but got {type(ref)} instead")
         match = SimpleTokenizer.has_answer(ref, str(pred), uncased=True, keep_punc=self.keep_punc)

@@ -122,6 +122,30 @@ def preprocess_audio(source, target_sr=16000, device=None):
 
     return waveform
 
+def parse_repo_and_pattern(path: str):
+    """
+    Supports two types of input:
+    1. Local directory (already downloaded by the user):
+       Treated as is_local=True, with pattern="*.parquet"
+    2. HuggingFace-style path:
+       repo/dataset_dir or repo/subdir/subdir
+    """
+    # --- Case 1: clear local dir ---
+    if os.path.exists(path):  # support file
+        return {"type": "local", "repo": os.path.abspath(path), "pattern": "*.parquet"}
+
+    # --- Case 2: split by "/" to detect HF repo ---
+    parts = path.strip("/").split("/")
+    if len(parts) >= 2:
+        # Tele-AI/TeleSpeech-AudioBench, noise-zh/babble_-5dB-zh
+        # Tele-AI/TeleSpeech-AudioBench, llamaqa-zh
+        repo = "/".join(parts[:2])
+        pattern = "/".join(parts[2:]) if len(parts) > 2 else None
+        if pattern:
+            return {"type": "hf", "repo": repo, "pattern": pattern}
+
+    raise ValueError(f"Unrecognized dataset path: {path}")
+
 def load_and_process_parquet_dataset(
     repo_or_path,
     data_dir_pattern,
@@ -136,13 +160,16 @@ def load_and_process_parquet_dataset(
     Supports multiple audio keys (e.g., for multi-turn dialog like user_audio1, bot_audio1, ...).
     """
     if extra_audio_keys is None:
-        extra_audio_keys = ["user_audio1", "user_audio2", "user_audio3", "user_audio4"]
+        extra_audio_keys = ["user_audio1", "user_audio2", "user_audio3", "user_audio4"]  # TELEVAL multiturn-memory keys
     
     os.makedirs(audio_output_dir, exist_ok=True)
     if is_local:
-        ds = load_dataset("parquet", data_files={"test": f"{repo_or_path}/{data_dir_pattern}/*.parquet"}, split="test")
+        wildcard = data_dir_pattern if data_dir_pattern.endswith(".parquet") else os.path.join(data_dir_pattern, "*.parquet")
+        data_files = {"test": os.path.join(repo_or_path, wildcard)}
+        ds = load_dataset("parquet", data_files=data_files, split="test")
     else:
-        ds = load_dataset(repo_or_path, data_files={"test": f"{data_dir_pattern}/*.parquet"}, split="test")
+        wildcard = data_dir_pattern if data_dir_pattern.endswith(".parquet") else f"{data_dir_pattern}/*.parquet"
+        ds = load_dataset(repo_or_path, data_files={"test": wildcard}, split="test")
     df = pd.DataFrame(ds)
     
     records = []

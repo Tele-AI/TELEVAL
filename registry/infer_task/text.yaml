@@ -1,12 +1,4 @@
 # ------------------- for text LLM -------------------
-qa-text-test:
-  class: src.config.InferTaskCfg
-  args:
-    dataset: test-zh
-    template: zeroshot-qa
-    model: qwen2-7b-instruct
-    eval_task: basic
-
 text-llamaqa-en:
   class: src.config.InferTaskCfg
   args:
@@ -71,31 +63,6 @@ text-chinese_quiz-zh:
     model: qwen2-7b-instruct
     eval_task: basic
 
-text-livelihood_policy-zh:
-  class: src.config.InferTaskCfg
-  args:
-    dataset: livelihood_policy-zh
-    template: zeroshot-qa
-    model: qwen2-7b-instruct
-    eval_task: basic
-
-# --------------------choice---------------------
-text-ceval-zh:
-  class: src.config.InferTaskCfg
-  args:
-    dataset: ceval-zh
-    template: text-choice
-    model: qwen2-7b-instruct
-    eval_task: choice
-
-text-agieval-zh:
-  class: src.config.InferTaskCfg
-  args:
-    dataset: agieval-zh
-    template: text-choice
-    model: qwen2-7b-instruct
-    eval_task: choice
-
 # ----------------------dialect------------------
 text-sichuanese:
   class: src.config.InferTaskCfg
@@ -138,6 +105,14 @@ text-cantonese:
     eval_task: basic
 
 # ---------------------livelihood--------------------------
+text-livelihood_policy-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: livelihood_policy-zh
+    template: zeroshot-qa
+    model: qwen2-7b-instruct
+    eval_task: basic
+
 text-livelihood_policy-sichuanese:
   class: src.config.InferTaskCfg
   args:
@@ -220,10 +195,18 @@ text-chitchat-cantonese:
     eval_task: basic
 
 # -------------------- emotion---------------------
-text-emo:
+text-empathy_response-acoustic:
   class: src.config.InferTaskCfg
   args:
-    dataset: esd
+    dataset: empathy_response_acoustic-zh
+    template: text-emo
+    model: qwen2-7b-instruct
+    eval_task: emotion_understand
+
+text-empathy_response-lexical:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: empathy_response_lexical-zh
     template: text-emo
     model: qwen2-7b-instruct
     eval_task: emotion_understand

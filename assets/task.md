@@ -20,18 +20,19 @@
 | aqa-chinese_quiz-northeastern_mandarin | ```chinese_quiz-northeastern_mandarin``` | ```basic```        |
 | aqa-chinese_quiz-shanghainese | ```chinese_quiz-shanghainese``` | ```basic```        |
 | aqa-chinese_quiz-sichuanese | ```chinese_quiz-sichuanese```   | ```basic```        |
-| acceptance-human-zh | ```human_accept-zh```     | ```human_acceptance```        |
+| morality-human-zh | ```human_accept-zh```     | ```human_morality```        |
 | chitchat-human-zh | ```human_chitchat-zh```     | ```human_likeness```        |
 | multiturn-memory-zh | ```multiturn_memory-zh```     | ```basic```        |
-| aed-audio-instruct | ```aed_combine-zh```     | ```aed_instruct```        |
-| emotion-esd | ```esd-zh```     | ```emotion_understand, emotion_response```        |
-| aqa-para_mix300-zh | ```para_mix300-zh```     | ```basic, para_care```        |
-| care-age-zh | ```age-zh```     | ```age_care```        |
-| follow-chitchat-cantonese | ```chitchat-cantonese```    | ```dialect_follow, dialect_classify```         |
-| follow-chitchat-henan_dialect | ```chitchat-henan_dialect```     | ```dialect_follow, dialect_classify```        |
-| follow-chitchat-northeastern_mandarin | ```chitchat-northeastern_mandarin``` | ```dialect_follow, dialect_classify```        |
-| follow-chitchat-shanghainese | ```chitchat-shanghainese``` | ```dialect_follow, dialect_classify```        |
-| follow-chitchat-sichuanese | ```chitchat-sichuanese```   | ```dialect_follow, dialect_classify```        |
+| scene | ```scene-zh```     | ```aed_instruct```        |
+| empathy_response-acoustic | ```empathy_response_acoustic-zh```     | ```empathetic_response, empathetic_response_audio```        |
+| empathy_response-lexical | ```empathy_response_lexical-zh```     | ```empathetic_response, empathetic_response_audio```        |
+| nsv_aware_response-zh | ```para_mix300-zh```     | ```basic, care_nsv```        |
+| age_aware_response-zh | ```age-zh```     | ```care_age```        |
+| follow-chitchat-cantonese | ```chitchat-cantonese```    | ```dialect_response, dialect_response_audio```         |
+| follow-chitchat-henan_dialect | ```chitchat-henan_dialect```     | ```dialect_response, dialect_response_audio```        |
+| follow-chitchat-northeastern_mandarin | ```chitchat-northeastern_mandarin``` | ```dialect_response, dialect_response_audio```        |
+| follow-chitchat-shanghainese | ```chitchat-shanghainese``` | ```dialect_response, dialect_response_audio```        |
+| follow-chitchat-sichuanese | ```chitchat-sichuanese```   | ```dialect_response, dialect_response_audio```        |
 | aqa-livelihood_policy-zh | ```livelihood_policy-zh``` | ```basic``` |
 | aqa-livelihood_policy-cantonese | ```livelihood_policy-cantonese```    | ```basic``` |
 | aqa-livelihood_policy-henan_dialect | ```livelihood_policy-henan_dialect```     | ```basic``` |
@@ -57,17 +58,17 @@
 |:--------------:|:----------:|:----------:|:-------:|
 | ```basic```  | string match | ACC | Text |
 | ```choice``` | regex match | ACC | Text |
-| ```emotion_understand``` | LLM-as-judge | Score | Text |
+| ```empathetic_response``` | LLM-as-judge | Score | Text |
 | ```aed_instruct```  | LLM-as-judge | Score | Text |
 | ```multiturn_fluency```  | LLM-as-judge | Score | Text |
-| ```dialect_follow``` | LLM-as-judge | Score | Text |
-| ```human_acceptance``` | LLM-as-judge | Score | Text |
+| ```dialect_response``` | LLM-as-judge | Score | Text |
+| ```human_morality``` | LLM-as-judge | Score | Text |
 | ```human_likeness``` | LLM-as-judge | Score | Text |
-| ```para_care``` | LLM-as-judge | Score | Text |
-| ```age_care``` | LLM-as-judge | Score | Text |
-| ```wer```  | WER of Model Outputs (Text and ASR-transcribed Audio) | WER/CER | Audio |
+| ```care_nsv``` | LLM-as-judge | Score | Text |
+| ```care_age``` | LLM-as-judge | Score | Text |
+| ```modal_consistency```  | Consistency of Model Outputs (Text and ASR-transcribed Audio) | 1-WER | Audio |
 | ```dnsmos``` | DNSMOS |  Score | Audio |
-| ```emotion_response``` | Emo2Vec Scores Based on Human Labels | Score | Audio |
-| ```dialect_classify``` | Dialect Classify Model | Score | Audio |
+| ```empathetic_response_audio``` | Emotion Scores Based on Human Labels | Score | Audio |
+| ```dialect_response_audio``` | Dialect Classify Model | Score | Audio |
 * The matching algorithms used in the framework employ a relatively relaxed matching strategy but may still miss some cases and cannot cover all output scenarios.
 * **For audio testing, set** ```save_pred_audio = True``` **in the** ```infer_task``` **configuration.**

@@ -1,3 +1,4 @@
+import soundfile as sf
 from typing import List, Dict
 from src.evaluator.base import Evaluator
 
@@ -6,16 +7,38 @@ class Emo2vec(Evaluator):
         from funasr import AutoModel
         self.model = AutoModel(model=model, hub="ms", disable_update=True)
         self.strict = strict
+        self.MAX_DURATION = 300  # 5min
 
     def evaluate(self, preds, refs, pred_info_list: List[Dict], **kwargs):
-        # emo2vec model support batch generate
-        pred_audios = [info["pred_audio"] for info in pred_info_list]
-        model_outputs = self.model.generate(
-            pred_audios, output_dir=None, granularity="utterance", extract_embedding=False
-        )
-
+        # emo2vec model support batch generate, do not need @parallel_batch
         results = []
-        for output, info in zip(model_outputs, pred_info_list):
+        model_input_audios = []
+        model_input_infos = []
+        do_filter = self.MAX_DURATION is not None
+
+        for info in pred_info_list:
+            audio_path = info["pred_audio"]
+            audio, sr = sf.read(audio_path)
+            if do_filter:
+                duration = len(audio) / sr
+                if duration > self.MAX_DURATION:
+                    results.append({"key": info["key"], "score": 0})
+                    continue
+
+            model_input_audios.append(audio_path)
+            model_input_infos.append(info)
+
+        if model_input_audios:
+            model_outputs = self.model.generate(
+                model_input_audios,
+                output_dir=None,
+                granularity="utterance",
+                extract_embedding=False
+            )
+        else:
+            model_outputs = []
+
+        for output, info in zip(model_outputs, model_input_infos):
             label_scores = {
                 label.split("/")[-1].lower(): score
                 for label, score in zip(output["labels"], output["scores"])

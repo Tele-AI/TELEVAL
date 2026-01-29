@@ -17,10 +17,9 @@ qwen3-8b-instruct:
   args:
     path: path/to/Qwen3-8B
     sample_params:
+      think: True
       gen_type: greedy
 
 qwen2.5-72b-instruct:
   args:
     path: path/to/qwen2.5-72b-instruct
-    sample_params:
-      gen_type: default  # as judgement

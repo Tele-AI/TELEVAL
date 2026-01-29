@@ -1,5 +1,5 @@
 """
-from https://github.com/OpenBMB/UltraEval-Audio/blob/main/src/registry.py
+Modified from https://github.com/OpenBMB/UltraEval-Audio/blob/main/src/registry.py
 
 Functions to handle registration of evals. To add a new eval to the registry,
 add an entry in one of the YAML files in the `../registry` dir.

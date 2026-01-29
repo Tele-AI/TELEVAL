@@ -10,6 +10,7 @@ RefsType = List[RefType]
 class EvalTaskCfg:
     evaluator: str
     summarizer: str
+    batch_size: int = None
 
 @dataclass
 class InferTaskCfg:

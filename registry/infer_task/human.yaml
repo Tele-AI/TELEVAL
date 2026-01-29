@@ -1,11 +1,11 @@
-acceptance-human-zh:
+morality-human-zh:
   class: src.config.InferTaskCfg
   args:
-    dataset: human_acceptance-zh
+    dataset: human_morality-zh
     template: zeroshot-aqa
     model: qwen2_5_omni
     save_pred_audio: False
-    eval_task: human_acceptance
+    eval_task: human_morality
 
 chitchat-human-zh:
   class: src.config.InferTaskCfg

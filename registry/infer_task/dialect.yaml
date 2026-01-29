@@ -44,52 +44,6 @@ aqa-chinese_quiz-cantonese:
     save_pred_audio: False
     eval_task: basic
 
-# -----------------dialectt understanding livelihood policy (hard)------------
-aqa-livelihood_policy-sichuanese:
-  class: src.config.InferTaskCfg
-  args:
-    dataset: livelihood_policy-sichuanese
-    template: zeroshot-aqa
-    model: qwen2_5_omni
-    save_pred_audio: False
-    eval_task: basic
-
-aqa-livelihood_policy-shanghainese:
-  class: src.config.InferTaskCfg
-  args:
-    dataset: livelihood_policy-shanghainese
-    template: zeroshot-aqa
-    model: qwen2_5_omni
-    save_pred_audio: False
-    eval_task: basic
-
-aqa-livelihood_policy-northeastern_mandarin:
-  class: src.config.InferTaskCfg
-  args:
-    dataset: livelihood_policy-northeastern_mandarin
-    template: zeroshot-aqa
-    model: qwen2_5_omni
-    save_pred_audio: False
-    eval_task: basic
-
-aqa-livelihood_policy-henan_dialect:
-  class: src.config.InferTaskCfg
-  args:
-    dataset: livelihood_policy-henan_dialect
-    template: zeroshot-aqa
-    model: qwen2_5_omni
-    save_pred_audio: False
-    eval_task: basic
-
-aqa-livelihood_policy-cantonese:
-  class: src.config.InferTaskCfg
-  args:
-    dataset: livelihood_policy-cantonese
-    template: zeroshot-aqa
-    model: qwen2_5_omni
-    save_pred_audio: False
-    eval_task: basic
-
 # ------------------dialect chitchat---------------------
 follow-chitchat-sichuanese:
   class: src.config.InferTaskCfg
@@ -98,7 +52,7 @@ follow-chitchat-sichuanese:
     template: zeroshot-aqa
     model: qwen2_5_omni
     save_pred_audio: True
-    eval_task: dialect_follow # dialect_follow dialect_classify
+    eval_task: dialect_response # dialect_response dialect_response_audio
 
 follow-chitchat-shanghainese:
   class: src.config.InferTaskCfg
@@ -107,7 +61,7 @@ follow-chitchat-shanghainese:
     template: zeroshot-aqa
     model: qwen2_5_omni
     save_pred_audio: True
-    eval_task: dialect_follow # dialect_follow dialect_classify
+    eval_task: dialect_response # dialect_response dialect_response_audio
 
 follow-chitchat-northeastern_mandarin:
   class: src.config.InferTaskCfg
@@ -116,7 +70,7 @@ follow-chitchat-northeastern_mandarin:
     template: zeroshot-aqa
     model: qwen2_5_omni
     save_pred_audio: True
-    eval_task: dialect_follow # dialect_follow dialect_classify
+    eval_task: dialect_response # dialect_response dialect_response_audio
 
 follow-chitchat-henan_dialect:
   class: src.config.InferTaskCfg
@@ -125,7 +79,7 @@ follow-chitchat-henan_dialect:
     template: zeroshot-aqa
     model: qwen2_5_omni
     save_pred_audio: True
-    eval_task: dialect_follow # dialect_follow dialect_classify
+    eval_task: dialect_response # dialect_response dialect_response_audio
 
 follow-chitchat-cantonese:
   class: src.config.InferTaskCfg
@@ -134,4 +88,4 @@ follow-chitchat-cantonese:
     template: zeroshot-aqa
     model: qwen2_5_omni
     save_pred_audio: True
-    eval_task: dialect_follow # dialect_follow dialect_classify
+    eval_task: dialect_response # dialect_response dialect_response_audio

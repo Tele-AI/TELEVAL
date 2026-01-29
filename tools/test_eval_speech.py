@@ -6,7 +6,7 @@ from src.dataset import BatchLoader, BatchSaver
 from src.registry import registry
 
 dataset_name = "esd"
-eval_task = "dialect_classify"  # wer  dnsmos  emotion_response  dialect_classify
+eval_task = "dnsmos"  # modal_consistency  dnsmos  empathetic_response_audio  dialect_response_audio
 eval_task_cfg = registry.get_eval_task(eval_task)
 evaluator = registry.get_evaluator(eval_task_cfg.evaluator)
 summarizer = registry.get_summarizer(eval_task_cfg.summarizer)

@@ -1,3 +1,4 @@
+# ======= basic ===========
 jinja2
 tqdm
 requests
@@ -6,9 +7,12 @@ regex
 datasets
 soundfile
 librosa
-torch==2.6.0  # average
-torchaudio==2.6.0  # average
-transformers==4.45.0  # average
+
+# average
+torch==2.6.0
+torchaudio==2.6.0
+transformers==4.45.0
+huggingface_hub==0.25.2
 flash-attn==2.7.2.post1
 accelerate>=0.26.0
 
@@ -25,7 +29,7 @@ av==12.3.0
 fire==0.4.0
 ujson==5.10.0
 easydict==1.13
-diffusers==0.24.0
+diffusers==0.27.2
 deepspeed
 decord==0.6.0
 opencv-python==4.10.0.84
@@ -34,9 +38,8 @@ cairosvg==2.7.1
 
 # glm4voice
 hyperpyyaml
+tiktoken
 conformer==0.3.2
-diffusers==0.27.2
-huggingface_hub==0.25.2
 lightning==2.2.4
 rich==13.7.1
 gdown==5.1.0
@@ -58,14 +61,21 @@ timm
 torchdyn==1.0.6
 # transformers>=4.48.3
 
+# stepaudio2-mini
+#transformers==4.49.0
+s3tokenizer
+
+# mimoaudio
+#transformers==4.49.0
+
+
 # ============ evaluate ==============
-WeTextProcessing==1.0.3
+WeTextProcessing
+json-repair
 #vllm  # choice
-jiwer
+jiwer==4.0.0
 funasr
 zhon
 zhconv
 onnxruntime==1.18.1
 scipy
---find-links https://csukuangfj.github.io/kaldifeat/cuda.html
-kaldifeat==1.25.5  # choice, for dialect classify

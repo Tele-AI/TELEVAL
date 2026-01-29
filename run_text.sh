@@ -10,7 +10,6 @@ stop_stage=1
 eval_bsz=1
 
 text_qa_tasks="text-llamaqa-en,text-llamaqa-zh,text-triviaqa-en,text-triviaqa-zh,text-webq-en,text-webq-zh,text-chinesesimpleqa-zh"
-text_choice_tasks="text-agieval-zh,text-ceval-zh"
 text_dialect_tasks="text-sichuanese,text-shanghainese,text-northeastern_mandarin,text-henan_dialect,text-cantonese"
 text_chitchat_dialect_tasks="text-chitchat-sichuanese,text-chitchat-shanghainese,text-chitchat-northeastern_mandarin,text-chitchat-henan_dialect,text-chitchat-cantonese"
 

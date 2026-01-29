@@ -71,13 +71,3 @@ aqa-chinese_quiz-zh:
     model: qwen2_5_omni
     save_pred_audio: False
     eval_task: basic
-
-aqa-livelihood_policy-zh:
-  class: src.config.InferTaskCfg
-  args:
-    dataset: livelihood_policy-zh
-    template: zeroshot-aqa
-    model: qwen2_5_omni
-    save_pred_audio: False
-    eval_task: basic
-

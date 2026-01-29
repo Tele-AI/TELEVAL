@@ -35,42 +35,6 @@ chinese_quiz-cantonese:
     ref_col: answer
     query_col: query
 
-# -----------------livelihood policy dialect------------------
-livelihood_policy-sichuanese:
-  class: src.dataset.BatchLoader
-  args:
-    file: Tele-AI/TELEVAL/livelihood_policy-sichuanese
-    ref_col: answer
-    query_col: query
-
-livelihood_policy-shanghainese:
-  class: src.dataset.BatchLoader
-  args:
-    file: Tele-AI/TELEVAL/livelihood_policy-shanghainese
-    ref_col: answer
-    query_col: query
-
-livelihood_policy-northeastern_mandarin:
-  class: src.dataset.BatchLoader
-  args:
-    file: Tele-AI/TELEVAL/livelihood_policy-northeastern_mandarin
-    ref_col: answer
-    query_col: query
-
-livelihood_policy-henan_dialect:
-  class: src.dataset.BatchLoader
-  args:
-    file: Tele-AI/TELEVAL/livelihood_policy-henan_dialect
-    ref_col: answer
-    query_col: query
-
-livelihood_policy-cantonese:
-  class: src.dataset.BatchLoader
-  args:
-    file: Tele-AI/TELEVAL/livelihood_policy-cantonese
-    ref_col: answer
-    query_col: query
-
 # -----------------chitchat dialect------------------
 chitchat-sichuanese:
   class: src.dataset.BatchLoader

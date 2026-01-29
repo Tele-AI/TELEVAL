@@ -1,26 +1,35 @@
-emotion-esd:
+empathy_response-acoustic:
   class: src.config.InferTaskCfg
   args:
-    dataset: esd-zh
+    dataset: empathy_response_acoustic-zh
     template: zeroshot-aqa
     model: qwen2_5_omni
-    eval_task: emotion_understand  # ["emotion_understand", "wer", "dnsmos", "emotion_response"]
+    eval_task: emotion_understand  # ["empathetic_response", "modal_consistency", "dnsmos", "empathetic_response_audio"]
     save_pred_audio: True
 
-aqa-para_mix300-zh:
+empathy_response-lexical:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: empathy_response_lexical-zh
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    eval_task: emotion_understand  # ["empathetic_response", "modal_consistency", "dnsmos", "empathetic_response_audio"]
+    save_pred_audio: True
+
+nsv_aware_response-zh:
   class: src.config.InferTaskCfg
   args:
     dataset: para_mix300-zh
     template: zeroshot-aqa
     model: qwen2_5_omni
-    eval_task: para_care  # ["para_care", "basic"]
+    eval_task: care_nsv  # ["care_nsv", "basic"]
     save_pred_audio: False
 
-care-age-zh:
+age_aware_response-zh:
   class: src.config.InferTaskCfg
   args:
     dataset: age-zh
     template: zeroshot-aqa
     model: qwen2_5_omni
-    eval_task: age_care
+    eval_task: care_age
     save_pred_audio: False

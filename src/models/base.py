@@ -39,7 +39,7 @@ class Model:
                 audio_list, text_list = processed_input["audio"], processed_input["query"]
 
                 reverse = kwargs.get("reverse_spkr", False)
-                use_model_history = kwargs.get("use_model_history", False)
+                use_model_history = kwargs.get("use_model_history", True)
                 save_latest_only = kwargs.get("save_latest_only", False)
 
                 # alternate grouping, with the default parity division user/assistant
@@ -48,18 +48,21 @@ class Model:
 
                 nrounds = min(len(user_audio), len(user_text), len(assistant_text))
                 results, history = [], []
-                user_history, assistant_history = [], []
+                user_history, assistant_history, assistant_his_audio = [], [], []
                 generate_kwargs = {"instruct": processed_input.get("instruct")}
+                user_infos, assistant_infos = processed_input["meta_info"][0::2], processed_input["meta_info"][1::2]
+
                 for i in range(nrounds):
-                    logger.info(f"Processing round {i+1}")
                     current_history = list(history)
                     if kwargs.get("pred_audio"):
                         generate_kwargs["pred_audio"] = os.path.join(dir_path, f"{base}_round{i + 1}{ext}")
                     generate_kwargs["user_query_history"] = user_text[:i]
                     generate_kwargs["user_query"] = user_text[i]
-
+                    generate_kwargs["assistant_his_audio"] = assistant_his_audio
                     response = self.generate_multiturn(user_audio[i], user_history, assistant_history, **generate_kwargs)
+                    
                     if not save_latest_only or i == nrounds - 1:
+                        # output results
                         results.append({
                             "nround": i + 1,
                             "rounds": nrounds,
@@ -67,19 +70,28 @@ class Model:
                             "pred_audio": response.get("pred_audio"),
                             "query": user_text[i],
                             "ref": assistant_text[i],
+                            "current_user_meta": user_infos[i] if len(user_infos[i]) > 0 else None,
+                            "current_bot_meta": assistant_infos[i] if len(assistant_infos[i]) > 0 else None,
                             "history": current_history
                         })
 
-                    history.extend([user_text[i], response["pred"]])
+                    history.append(
+                        {
+                            "user": user_text[i],
+                            "bot": response["pred"],
+                            "pred_audio": response.get("pred_audio"),
+                            "user_meta_info": user_infos[i] if len(user_infos[i]) > 0 else None,
+                            "bot_meta_info": assistant_infos[i] if len(assistant_infos[i]) > 0 else None
+                        }
+                    )
                     user_history.append(user_audio[i])
                     assist_his = response.get("his") if response.get("his") is not None else response["pred"]
                     assistant_history.append(assist_his if use_model_history else assistant_text[i])
-                    generate_kwargs["assistant_his_audio"] = response.get("pred_audio") if use_model_history else assistant_audio[i]
+                    assistant_his_audio.append(response.get("pred_audio") if use_model_history else assistant_audio[i])
                     # NOTE (TTTdas): if cache saved, then use this cache instead of history
                     #                cache only save one, and update per generation
                     if "cache" in response:
                         generate_kwargs["cache"] = response["cache"]
-
                 return results
             else:
                 raise ValueError("Unsupported processed input type.")
@@ -130,6 +142,7 @@ class Model:
         """
         def _extract_from_contents(content: Dict[str, Any]):
             audio, text = content.get("audio"), content.get("text")
+            meta_info = {k: v for k, v in content.items() if k not in ["audio", "text"]}
             if audio:
                 try:
                     info = sf.info(audio)
@@ -140,7 +153,7 @@ class Model:
                     raise ValueError("Inputs audio has more than 1 channel, need convertion!!!")
                 if info.samplerate != self.inputs_sr:
                     raise ValueError(f"Inputs audio sampling rate is {info.samplerate}, not equal to {self.inputs_sr}, need resample!!!")
-            return audio, text
+            return audio, text, meta_info
 
         def _process_single_turn(data: List[Dict]) -> Dict:
             """
@@ -167,7 +180,7 @@ class Model:
             result = {"type": "single_turn", "audio": None, "query": None, "assistant": None, "instruct": "", "system": None}
             for info in data:
                 role = info.get("role", "").lower()
-                audio, text = _extract_from_contents(info.get("content", {}))
+                audio, text, meta_info = _extract_from_contents(info.get("content", {}))
                 if role == "user":
                     result["audio"], result["query"] = audio, text
 
@@ -186,8 +199,8 @@ class Model:
                 {
                     "nrounds": "2",
                     "dialogue": [
-                        {"role": "A", "round": "1", "content": {"audio": audio1, "text": text1}},
-                        {"role": "B", "round": "1", "content": {"audio": audio2/None, "text": text2}},
+                        {"role": "A", "round": "1", "content": {"audio": audio1, "text": text1, "meta": xxx}},
+                        {"role": "B", "round": "1", "content": {"audio": audio2/None, "text": text2, "meta": xxx}},
                         ...
                     ],
                     "instruct": {"content": {"text": instruct_text}}
@@ -205,7 +218,7 @@ class Model:
             dialogue = data.get("dialogue", [])
             if not dialogue:
                 raise ValueError("Multi-turn dialogue is empty.")
-            audio_list, text_list = zip(*[
+            audio_list, text_list, meta_info_list = zip(*[
                 _extract_from_contents(turn.get("content", {})) for turn in dialogue
             ])
             
@@ -218,9 +231,9 @@ class Model:
                 "nrounds": data.get("nrounds"),
                 "audio": list(audio_list),
                 "query": list(text_list),
-                "instruct": instruct_text
+                "instruct": instruct_text,
+                "meta_info": list(meta_info_list)
             }
-        
         if isinstance(input_data, dict) and "dialogue" in input_data:
             return _process_multi_turn(input_data)
         elif isinstance(input_data, list):

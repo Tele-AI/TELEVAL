@@ -1,0 +1,54 @@
+# -----------------livelihood policy (hard)------------
+aqa-livelihood_policy-zh:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: livelihood_policy-zh
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+aqa-livelihood_policy-sichuanese:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: livelihood_policy-sichuanese
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+aqa-livelihood_policy-shanghainese:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: livelihood_policy-shanghainese
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+aqa-livelihood_policy-northeastern_mandarin:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: livelihood_policy-northeastern_mandarin
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+aqa-livelihood_policy-henan_dialect:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: livelihood_policy-henan_dialect
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic
+
+aqa-livelihood_policy-cantonese:
+  class: src.config.InferTaskCfg
+  args:
+    dataset: livelihood_policy-cantonese
+    template: zeroshot-aqa
+    model: qwen2_5_omni
+    save_pred_audio: False
+    eval_task: basic

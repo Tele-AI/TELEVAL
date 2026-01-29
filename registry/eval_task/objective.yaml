@@ -5,10 +5,10 @@ basic:
   class: src.config.EvalTaskCfg
   args:
     evaluator: exist_match
-    summarizer: AvgInfo
+    summarizer: Avg
 
 choice:
   class: src.config.EvalTaskCfg
   args:
     evaluator: single_option_match
-    summarizer: AvgInfo
+    summarizer: Avg

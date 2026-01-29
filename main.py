@@ -15,6 +15,7 @@ def get_args():
     parser.add_argument("--save_dir", default="")
     parser.add_argument("--eval_task", default=None)
     parser.add_argument("--save_pred_audio", default=None)
+    parser.add_argument("--keep_meta_info", default=True)
 
     args = parser.parse_args()
     return args

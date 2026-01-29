@@ -1,17 +1,38 @@
-AvgInfo: 
+Avg:
+  class: src.summarizer.summarizer.Avg
+  args:
+    rescale: power
+    power: 1
+    score_scale: 1
+
+AvgInfoHundred: 
   class: src.summarizer.summarizer.AvgInfo
-  args: {}
+  args:
+    rescale: power
+    power: 1
 
 AvgThreshold:
   class: src.summarizer.summarizer.AvgThreshold
   args:
-    rescale: power # linear  power
+    rescale: power # base linear  power
     power: 2
+    threshold: 60
+
+AvgThresholdLinear:
+  class: src.summarizer.summarizer.AvgThreshold
+  args:
+    rescale: power
+    power: 1
     threshold: 60
 
 AvgWER:
   class: src.summarizer.summarizer.AvgWER
   args: {}
+
+AvgConsistency:
+  class: src.summarizer.summarizer.AvgWER
+  args:
+    reverse: True
 
 AvgMOS:
   class: src.summarizer.summarizer.AvgMOS

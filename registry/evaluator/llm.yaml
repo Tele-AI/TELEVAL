@@ -24,7 +24,7 @@ emo_llm:
   class: src.evaluator.llm.LLMScorer
   args: 
     llm_name: gpt4o
-    judge_task: emotion_understand
+    judge_task: empathy_response
     api_keys:
       key1: "xxx"
       key2: "xxx"
@@ -53,11 +53,11 @@ dialect_llm:
       key3: "xxx"
     max_workers: 3
 
-para_care_llm:
+nsv_care_llm:
   class: src.evaluator.llm.LLMScorer
   args: 
     llm_name: gpt4o
-    judge_task: para_care
+    judge_task: nsv_care
     api_keys:
       key1: "xxx"
       key2: "xxx"

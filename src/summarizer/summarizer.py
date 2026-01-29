@@ -5,7 +5,7 @@ from collections import Counter
 logger = logging.getLogger(__name__)
 
 class Summarizer:
-    def __init__(self, rescale="base", power=2):
+    def __init__(self, rescale="base", power=2, reverse=False):
         rescale_map = {
             "base": lambda x: x,
             "linear": self.linear_rescale,
@@ -13,6 +13,7 @@ class Summarizer:
         }
         logger.info(f"Using rescale type: {rescale}")
         self.rescale_func = rescale_map[rescale]
+        self.reverse = reverse
     
     def _check_scores(self, scores: List[Any]):
         if any(s is None for s in scores if not isinstance(s, dict)):
@@ -25,11 +26,6 @@ class Summarizer:
     @staticmethod
     def power_rescale(score, power):
         return ((score / 5) ** power) * 100
-    
-    # @staticmethod
-    # def sigmoid_rescale(score, scale=10):
-    #     x = (score - 2.5)  # move to 3
-    #     return (1 / (1 + np.exp(-scale * x / 5))) * 100
 
     def statistic(self, scores: List[Any], **kwargs) -> Dict[str, Any]:
         raise NotImplementedError
@@ -88,4 +84,7 @@ class AvgWER(Summarizer):
             raise ValueError("Not enough ref_len to static")
 
         avg_wer = (total_subs + total_dele + total_inse) / total_ref_len * 100
-        return {"score": "WER: {:.2f}%".format(avg_wer)}
+        if self.reverse:
+            return {"score": "Consis: {:.2f}%".format(100 - avg_wer)}
+        else:
+            return {"score": "WER_or_CER: {:.2f}%".format(avg_wer)}
